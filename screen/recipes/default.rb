@@ -20,3 +20,7 @@
 package "screen" do
   action :install
 end
+
+package "screen-profiles" do
+  action :install
+end

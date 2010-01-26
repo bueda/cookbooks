@@ -20,10 +20,7 @@ package "python" do
   action :install
 end
 
-%w{ 
-  dev imaging matplotlib matplotlib-data matplotlib-doc mysqldb 
-  numpy numpy-ext paramiko scipy setuptools sqlite
-}.each do |pkg|
+node[:python][:distpackages].each do |pkg|
   package "python-#{pkg}" do
     action :install
   end

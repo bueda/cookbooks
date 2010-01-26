@@ -4,12 +4,9 @@ package "htop"
 package "runurl" 
 package "ec2-init"
 
-#TODO method to do a dist-upgrade?
 #TODO pip provider with option for a virtualenv
-#TODO add repository?
 #TODO media site for nginx?
 #TODO irstlm
-#TODO denyhosts whitelist template
 #TODO switch from EBS to ephemeral - grab from dev server with rsync or from S3
 #TODO switch apache, django and mail logs to empemeral storage
 #TODO deploy django 

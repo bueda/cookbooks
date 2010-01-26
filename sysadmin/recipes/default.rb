@@ -4,7 +4,6 @@ package "htop"
 package "runurl" 
 package "ec2-init"
 
-#TODO pip provider with option for a virtualenv
 #TODO media site for nginx?
 #TODO irstlm
 #TODO switch from EBS to ephemeral - grab from dev server with rsync or from S3

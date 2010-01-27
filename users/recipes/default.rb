@@ -19,22 +19,22 @@ node[:users].each do |username, config|
   end  
 
   config[:files].each do |filename|
-    remote_file "/home/#{u}/#{filename}" do
-      source "#{u}/#{filename}"
+    remote_file "/home/#{username}/#{filename}" do
+      source "#{username}/#{filename}"
       mode 0750
-      owner u
+      owner username
       group config[:gid]
     end
   end
   
-  directory "/home/#{u}/.ssh" do
+  directory "/home/#{username}/.ssh" do
     action :create
-    owner u
+    owner username
     group config[:gid]
     mode 0700
   end
   
-  add_keys u do
+  add_keys username do
     conf config
   end
 end

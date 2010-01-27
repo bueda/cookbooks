@@ -25,6 +25,6 @@ bash "install_irstlm" do
   mkdir -p /usr/local/include/irstlm
   cp *.h /usr/local/include/irstlm
   cp libirstlm.so /usr/local/lib
-  rm -rf /tmp/irstlm*
+  #rm -rf /tmp/irstlm*
   EOH
 end

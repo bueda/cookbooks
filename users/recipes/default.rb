@@ -4,7 +4,7 @@ node[:groups].each do |group_key, config|
     gid config[:gid]
     action [:create, :manage]
   end
-end
+end unless not node[:groups]
 
 node[:users].each do |username, config|
   user username do
@@ -25,7 +25,7 @@ node[:users].each do |username, config|
       owner username
       group config[:gid]
     end
-  end
+  end unless not config[:files]
   
   directory "/home/#{username}/.ssh" do
     action :create
@@ -37,10 +37,11 @@ node[:users].each do |username, config|
   add_keys username do
     conf config
   end
-end
+end unless not node[:users]
 
 node[:groups].each do |group_name, group_config|
-  users = node[:users].find_all { |u| u.last[:groups].include?(group_name) }
+  users = node[:users].find_all { |u| u.last[:groups] \
+		and u.last[:groups].include?(group_name) }
   users.each do |u, config|
     config[:groups].each do |g|
       group g do
@@ -50,13 +51,4 @@ node[:groups].each do |group_name, group_config|
       end
     end    
   end
-end
-
-# Remove initial setup user and group.
-user  "ubuntu" do
-  action :remove
-end
-
-group "ubuntu" do
-  action :remove
 end

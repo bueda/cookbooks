@@ -81,12 +81,6 @@ end
 
 include_recipe "apache2::mod_status"
 include_recipe "apache2::mod_alias"
-include_recipe "apache2::mod_auth_basic"
-include_recipe "apache2::mod_authn_file"
-include_recipe "apache2::mod_authz_default"
-include_recipe "apache2::mod_authz_groupfile"
-include_recipe "apache2::mod_authz_host"
-include_recipe "apache2::mod_authz_user"
 include_recipe "apache2::mod_autoindex"
 include_recipe "apache2::mod_dir"
 include_recipe "apache2::mod_env"

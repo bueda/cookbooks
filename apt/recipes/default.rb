@@ -1,9 +1,11 @@
-execute "apt-get update" do
-  environment { "DEBIAN_FRONTEND" => "noninteractive" }
+execute "apt-get update -q -y" do
+  #TODO
+  #environment { "DEBIAN_FRONTEND" => "noninteractive" }
   action :run
 end
 
 execute "apt-get dist-upgrade -q -y" do
-  environment { "DEBIAN_FRONTEND" => "noninteractive" }
+  #TODO
+  #environment { "DEBIAN_FRONTEND" => "noninteractive" }
   action :run
 end

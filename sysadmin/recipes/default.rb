@@ -1,8 +1,6 @@
 package "vim-gnome"
 package "ack-grep"
 package "htop"
-package "runurl" 
-package "ec2-init"
 
 #TODO media site for nginx?
 #TODO switch from EBS to ephemeral - grab from dev server with rsync or from S3
@@ -13,4 +11,4 @@ node[:sysadmin][:files].each do |file|
     source "sysadmin/#{file}"
     mode 0755
   end
-end
+end if node[:sysadmin] and node[:sysadmin][:files]

@@ -1,13 +1,10 @@
-require 'resource/pip_package'
+require 'resource/pip_package.rb'
+require 'chef/resource/easy_install_package'
+
+easy_install_package "python-pip"
+pip_package "virtualenv"
 
 node[:virtualenv].each do |path, config|
-  file path do
-    owner config[:owner]
-    group config[:group]
-    mode config[:mode]
-    action :create
-  end
-
   config[:packages].each do |package|
     pip_package package do
       action :install
@@ -15,9 +12,10 @@ node[:virtualenv].each do |path, config|
     end
   end if config[:packages]
   
-  config[:vcs].each do |vcs|
-    pip_package vcs do
+  config[:vcs].each do |name, url|
+    pip_package name do
       action :install_from_vcs
+      source url
       virtualenv path
     end
   end if config[:vcs]

@@ -16,9 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-package "python" do
-  action :install
-end
+package "python"
+package "python-dev"
 
 node[:python][:distpackages].each do |pkg|
   package "python-#{pkg}" do

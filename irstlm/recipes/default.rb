@@ -1,11 +1,14 @@
+package "scons"
+package "zlib1g-dev"
+
 remote_file "/tmp/irstlm.tar.gz" do
   source "http://downloads.sourceforge.net/project/irstlm/irstlm/irstlm-5.22.01/irstlm-5.22.01.tar.gz"
+  not_if "test -e /tmp/irstlm.tar.gz"
 end
 
 directory "/tmp/irstlm/src" do
     owner "root"
     group "root"
-    mode "0775"
     action :create
     recursive true
     not_if "test -d /tmp/irstlm"
@@ -13,15 +16,17 @@ end
 
 remote_file "/tmp/irstlm/SConstruct" do
     source "SConstruct"
+    not_if "test -e /tmp/irstlm/SConstruct"
 end
 
 bash "install_irstlm" do
   user "root"
   cwd "/tmp"
+  not_if "test -e /usr/local/lib/libirstlm.so"
   code <<-EOH
   tar -xzf irstlm.tar.gz -C irstlm
-  cd irstlm/src
-  scons
+  cd irstlm/irstlm*/src
+  scons -f ../../SConstruct
   mkdir -p /usr/local/include/irstlm
   cp *.h /usr/local/include/irstlm
   cp libirstlm.so /usr/local/lib

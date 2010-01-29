@@ -1,7 +1,6 @@
 require 'resource/pip_package.rb'
-require 'chef/resource/easy_install_package'
 
-easy_install_package "python-pip"
+execute "easy_install pip"
 pip_package "virtualenv"
 
 node[:virtualenv].each do |path, config|

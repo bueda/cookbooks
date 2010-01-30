@@ -41,7 +41,7 @@ end unless not node[:users]
 
 node[:groups].each do |group_name, group_config|
   users = node[:users].find_all { |u| u.last[:groups] \
-		and u.last[:groups].include?(group_name) }
+        and u.last[:groups].include?(group_name) }
   users.each do |u, config|
     config[:groups].each do |g|
       group g do

@@ -1,4 +1,0 @@
-SharedLibrary('irstlm', ['mempool.cpp', 'ngramtable.cpp', 'util.cpp',
-        'dict.cpp', 'lmmacro.cpp', 'mfstream.cpp', 'dictionary.cpp',
-        'lmtable.cpp', 'ngramcache.cpp', 'htable.cpp', 'cmd.c',
-        'n_gram.cpp'], LIBS=['z'])

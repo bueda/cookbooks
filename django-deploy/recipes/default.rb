@@ -1,20 +1,14 @@
-require 'chef-deploy'
+require 'aws/s3'
 
-directory "/root/.ssh" do
-    owner "root"
-    group "root"
-    mode "0600"
-    not_if "test -d /root/.ssh"
-end
+AWS::S3::Base.establish_connection!(
+    :access_key_id     => node[:s3][:access_key_id],
+    :secret_access_key => node[:s3][:secret_access_key]
+)
 
-remote_file "/root/.ssh/id_rsa" do
-    source "deploy_key"
-    mode "0600"
-end
-
-remote_file "/root/.ssh/id_rsa.pub" do
-    source "deploy_key.pub"
-    mode "0600"
+open('/tmp/django-app.tar.gz', 'w') do |file|
+  S3Object.stream 'django-app.tar.gz', 'bueda.deploy' do |chunk|
+    file.write chunk
+  end
 end
 
 node[:django_deploy].each do |path, config|

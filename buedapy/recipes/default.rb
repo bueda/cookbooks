@@ -6,9 +6,8 @@ AWS::S3::Base.establish_connection!(
 )
 
 open("/tmp/buedapy.tar.gz", "w") do |file|
-  S3Object.stream "buedapy.tar.gz", "bueda.deploy" do |chunk|
-    file.write chunk
-  end
+  obj = AWS::S3::S3Object.find "buedapy.tar.gz", "bueda.deploy"
+  file.write obj.value
 end unless File.exists?("/tmp/buedapy.tar.gz")
 
 pip_package "buedapy" do

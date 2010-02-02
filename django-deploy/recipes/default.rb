@@ -20,5 +20,5 @@ bash "deploy_django" do
   ln -s /var/django/bootstrap /var/django/current
   EOH
   not_if do File.exists?("/var/django/bootstrap")
-  notifies :restart, resource(:service => "apache)
+  notifies :restart, resource(:service => "apache")
 end

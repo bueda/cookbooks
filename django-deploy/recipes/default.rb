@@ -6,19 +6,20 @@ AWS::S3::Base.establish_connection!(
 )
 
 open("/tmp/django-app.tar.gz", "w") do |file|
-  S3Object.stream "django-app.tar.gz", "bueda.deploy" do |chunk|
+  AWS::S3::S3Object.stream "django-app.tar.gz", "bueda.deploy" do |chunk|
     file.write chunk
   end
 end unless File.exists?("/tmp/django-app.tar.gz")
 
 bash "deploy_django" do
-  user "deploy"
+  user "root"
   cwd "/tmp"
   code <<-EOH
   tar -xzf django-app.tar.gz
   mv django-app /var/django/bootstrap
   ln -s /var/django/bootstrap /var/django/current
+  chown deploy:bueda -R /var/django/current
   EOH
-  not_if do File.exists?("/var/django/bootstrap")
-  notifies :restart, resource(:service => "apache")
+  not_if do File.exists?("/var/django/bootstrap") end
+  notifies :restart, resources(:service => "apache2")
 end

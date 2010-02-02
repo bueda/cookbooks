@@ -9,10 +9,11 @@ open("/tmp/buedapy.tar.gz", "w") do |file|
   S3Object.stream "buedapy.tar.gz", "bueda.deploy" do |chunk|
     file.write chunk
   end
-end
+end unless File.exists?("/tmp/buedapy.tar.gz")
 
 pip_package "buedapy" do
   action :install_from_file
   source "/tmp/buedapy.tar.gz"
   virtualenv node[:buedapy][:virtualenv]
+  only_if File.exists?("/tmp/buedapy.tar.gz")
 end

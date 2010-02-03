@@ -17,14 +17,14 @@ node[:s3_tarball_deploy].each do |name, config|
     group "bueda"
     mode "0660"
     recursive true
-  do
+  end
 
   directory config[:deploy_parent] + "/" + "packages" do
     owner "deploy"
     group "bueda"
     mode "0660"
     recursive true
-  do
+  end
 
   bash "deploy" do
     user "root"

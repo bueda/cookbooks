@@ -36,7 +36,7 @@ node[:users].each do |username, config|
   
   add_keys username do
     conf config
-  end
+  end if config[:ssh_keys]
 end unless not node[:users]
 
 node[:groups].each do |group_name, group_config|

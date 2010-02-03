@@ -12,3 +12,11 @@ node[:sysadmin][:files].each do |file|
     mode 0755
   end
 end if node[:sysadmin] and node[:sysadmin][:files]
+
+directory "/var/log/bueda" do
+  owner "www-data"
+  group "bueda"
+  mode "0775"
+  action :create
+  not_if "test -d /var/log/bueda"
+end

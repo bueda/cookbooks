@@ -34,5 +34,5 @@ template "/etc/ssh/sshd_config" do
 end
 
 service "ssh" do
-  action :start
+  action :restart
 end

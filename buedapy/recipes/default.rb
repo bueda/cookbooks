@@ -15,5 +15,5 @@ pip_package "buedapy" do
   action :install_from_file
   source "/tmp/buedapy.tar.gz"
   virtualenv node[:buedapy][:virtualenv]
-  only_if File.exists?("/tmp/buedapy.tar.gz")
+  only_if do File.exists?("/tmp/buedapy.tar.gz") end
 end

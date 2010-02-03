@@ -13,6 +13,6 @@
     Allow from all
   </Directory>
 
-  Alias /admin/ <%= @node[:parent_dir] + @node[:admin_media] %>
+  Alias /admin/ <%= @params[:parent_dir] + @params[:admin_media] %>
   
 </VirtualHost>

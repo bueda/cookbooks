@@ -100,7 +100,3 @@ node[:apache][:web_apps].each do |name, config|
       end
     end
 end
-
-service "apache2" do
-  action :start
-end

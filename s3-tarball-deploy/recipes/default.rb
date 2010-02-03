@@ -12,6 +12,20 @@ node[:s3_tarball_deploy].each do |name, config|
     file.write obj.value
   end unless File.exists?("/tmp/#{config[:file]}")
 
+  directory config[:deploy_parent] + "/" + "releases" do
+    owner "deploy"
+    group "bueda"
+    mode "0660"
+    recursive true
+  do
+
+  directory config[:deploy_parent] + "/" + "packages" do
+    owner "deploy"
+    group "bueda"
+    mode "0660"
+    recursive true
+  do
+
   bash "deploy" do
     user "root"
     cwd "/tmp"

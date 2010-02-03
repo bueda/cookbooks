@@ -89,7 +89,7 @@ include_recipe "apache2::mod_negotiation"
 include_recipe "apache2::mod_setenvif"
 
 # Disable default site
-apache_site "default" do
+apache_site "000-default" do
   action :disable
 end
 

@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
   DocumentRoot <%= @params[:docroot] %>
   
@@ -20,7 +20,7 @@
   Alias /site_media <%= @params[:django_dir] %>/bueda/media
   Alias /robots.txt <%= @params[:django_dir] %>/robots.txt
 
-  WSGIScriptAlias / <%= @params[:django_dir] + @params[:wsgi_script] %>
+  WSGIScriptAlias / <%= @params[:django_dir] + "/" + @params[:wsgi_script] %>
   WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
   WSGIProcessGroup <%= @params[:wsgi_process_group] %>
 </VirtualHost>

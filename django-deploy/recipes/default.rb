@@ -1,7 +1,4 @@
-p = gem_package "aws-s3"
-p.run_action(:install)
-
-Gem.clear_paths
+include_recipe "s3"
 require "aws/s3"
 
 AWS::S3::Base.establish_connection!(
@@ -21,7 +18,7 @@ bash "deploy_django" do
   tar -xzf django-app.tar.gz
   mv django-app /var/django/bootstrap
   chown deploy:bueda -R /var/django/bootstrap
-  ln -s /var/django/bootstrap /var/django/current
+  ln -s /var/django/bootstrap /var/django/bueda
   EOH
   not_if do File.exists?("/var/django/bootstrap") end
   notifies :restart, resources(:service => "apache2")

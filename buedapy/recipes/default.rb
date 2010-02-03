@@ -1,7 +1,4 @@
-p = gem_package "aws-s3"
-p.run_action(:install)
-
-Gem.clear_paths
+include_recipe "s3"
 require "aws/s3"
 
 AWS::S3::Base.establish_connection!(

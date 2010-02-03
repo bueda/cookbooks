@@ -1,0 +1,18 @@
+<VirtualHost *:<%= @params[:port] %>>
+  ServerName <%= @params[:name] %>
+  DocumentRoot <%= @params[:parent_dir] + @params[:docroot] %>
+
+  LogLevel info
+  ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  
+  <Directory <%= @params[:parent_dir] + @params[:docroot] %>>
+    Options FollowSymLinks, -Indexes
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  Alias /admin/ <%= @node[:parent_dir] + @node[:admin_media] %>
+  
+</VirtualHost>

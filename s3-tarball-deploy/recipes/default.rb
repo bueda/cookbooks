@@ -33,14 +33,14 @@ node[:s3_tarball_deploy].each do |name, config|
     tar -xzf #{config[:file]}
     mv #{config[:file]} #{config[:deploy_parent]}/packages/
     mv /tmp/#{config[:extracted_folder]} #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
-    chown #{config[:owner]}:#{config[:group]} -R #{config[:deploy_parent]}/#{config[:deploy_target]}
-    chmod 664 -R #{config[:deploy_parent]}/#{config[:deploy_target]}
+    chown #{config[:owner]}:#{config[:group]} -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
+    chmod 664 -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
     EOH
     not_if do File.exists?(config[:deploy_parent] + "/releases/" + config[:deploy_target]) end
   end
 
-  link config[:deploy_parent] + "/" + config[:symlink] do
-    to config[:deploy_parent] + "/" + config[:deploy_target]
+  link config[:deploy_parent] + "/releases/" + config[:symlink] do
+    to config[:deploy_parent] + "/releases/" + config[:deploy_target]
     notifies :restart, resources(:service => "apache2")
   end
 end

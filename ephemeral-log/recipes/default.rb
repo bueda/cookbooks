@@ -1,5 +1,5 @@
 node[:ephemeral_log].each do |path, config|
-  [path, config[:dev].each do |dir|
+  [path, config[:dev]].each do |dir|
     directory dir do
       owner config[:owner]
       group config[:group]
@@ -10,7 +10,7 @@ node[:ephemeral_log].each do |path, config|
     end 
   end
   mount path do
-    device dev
+    device config[:dev]
     fstype "none"
     options "bind"
     action [:mount, :enable]

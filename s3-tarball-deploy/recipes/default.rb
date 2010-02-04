@@ -15,14 +15,14 @@ node[:s3_tarball_deploy].each do |name, config|
   directory config[:deploy_parent] + "/releases" do
     owner "deploy"
     group "bueda"
-    mode "0774"
+    mode "0775"
     recursive true
   end
 
   directory config[:deploy_parent] + "/packages" do
     owner "deploy"
     group "bueda"
-    mode "0764"
+    mode "0775"
     recursive true
   end
 
@@ -34,7 +34,7 @@ node[:s3_tarball_deploy].each do |name, config|
     mv #{config[:file]} #{config[:deploy_parent]}/packages/
     mv /tmp/#{config[:extracted_folder]} #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
     chown #{config[:owner]}:#{config[:group]} -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
-    chmod 774 -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
+    chmod 775 -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
     EOH
     not_if do File.exists?(config[:deploy_parent] + "/releases/" + config[:deploy_target]) end
   end

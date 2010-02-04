@@ -10,7 +10,7 @@ node[:s3][:files].each do |name, config|
   directory config[:directory] do
     owner config[:owner]
     group config[:group]
-    mode "0664"
+    mode "0774"
     recursive true
   end
 

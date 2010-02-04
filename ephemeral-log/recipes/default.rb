@@ -1,8 +1,8 @@
-node[:ephemeral_log].each do |path, dev|
-  [path, dev].each do |dir|
+node[:ephemeral_log].each do |path, config|
+  [path, config[:dev].each do |dir|
     directory dir do
-      owner "root"
-      group "root"
+      owner config[:owner]
+      group config[:group]
       mode "0775"
       recursive true
       action :create

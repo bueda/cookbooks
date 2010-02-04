@@ -23,3 +23,7 @@ pip_package "buedapy" do
   virtualenv node[:buedapy][:virtualenv]
   only_if do File.exists?("/tmp/buedapy.tar.gz") end
 end
+
+file "/tmp/buedapy.tar.gz" do 
+  action :delete
+end

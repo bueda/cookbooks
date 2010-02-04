@@ -31,7 +31,7 @@ node[:s3_tarball_deploy].each do |name, config|
     cwd "/tmp"
     code <<-EOH
     tar -xzf #{config[:file]}
-    mv #{config[:file]} #{config[:deploy_parent]}/packages/
+    mv #{config[:file]} #{config[:deploy_parent]}/packages/#{config[:deploy_target]}.tar.gz
     mv /tmp/#{config[:extracted_folder]} #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
     chown #{config[:owner]}:#{config[:group]} -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}
     chmod 775 -R #{config[:deploy_parent]}/releases/#{config[:deploy_target]}

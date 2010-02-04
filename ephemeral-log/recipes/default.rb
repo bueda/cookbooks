@@ -3,7 +3,7 @@ node[:ephemeral_log].each do |path, dev|
     directory dir do
       owner "root"
       group "root"
-      mode "0755"
+      mode "0775"
       recursive true
       action :create
       not_if "test -d #{dir}"

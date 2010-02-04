@@ -43,4 +43,8 @@ node[:s3_tarball_deploy].each do |name, config|
     to config[:deploy_parent] + "/releases/" + config[:deploy_target]
     notifies :start, resources(:service => "apache2")
   end
+
+  file "/tmp/#{config[:file]}" do 
+    action :delete
+  end
 end

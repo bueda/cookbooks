@@ -4,7 +4,8 @@
 
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
-  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
+  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined-elb
   
   <Directory <%= @params[:parent_dir] + @params[:docroot] %>>
     Options FollowSymLinks

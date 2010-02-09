@@ -41,7 +41,6 @@ node[:s3_tarball_deploy].each do |name, config|
 
   link config[:deploy_parent] + "/releases/" + config[:symlink] do
     to config[:deploy_parent] + "/releases/" + config[:deploy_target]
-    notifies :start, resources(:service => "apache2")
   end
 
   file "/tmp/#{config[:file]}" do 

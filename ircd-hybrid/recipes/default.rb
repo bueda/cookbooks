@@ -1,38 +1,23 @@
-packages = case node[:platform]
-  when "centos","redhat","fedora"
-    %w{openssh-clients openssh}
-  else
-    %w{openssh-client openssh-server}
-  end
-  
-packages.each do |pkg|
-  package pkg
-end
+package "ircd-hybrid"
 
-service "ssh" do
-  case node[:platform]
-  when "centos","redhat","fedora"
-    service_name "sshd"
-  else
-    service_name "ssh"
-  end
+service "ircd-hybrid" do
   supports :restart => true
   action [ :enable, :start ]
 end
 
-remote_file "/etc/ssh/known_hosts" do
-  source "known_hosts"
+remote_file "/etc/ircd-hybrid/ircd.motd" do
+  source "ircd.motd"
   mode 0644
 end
 
-template "/etc/ssh/sshd_config" do
-  source "sshd_config.erb"
+template "/etc/ircd-hybrid/ircd.conf" do
+  source "ircd.conf.erb"
   mode 0644
   owner "root"
   group "root"
-  notifies :restart, resources(:service => "ssh")
+  notifies :restart, resources(:service => "ircd-hybrid")
 end
 
-service "ssh" do
+service "ircd-hybrid" do
   action :restart
 end

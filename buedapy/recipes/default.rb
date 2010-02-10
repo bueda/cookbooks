@@ -12,7 +12,7 @@ AWS::S3::Base.establish_connection!(
     :secret_access_key => node[:s3][:secret_access_key]
 )
 
-if not File.exists?(node[:buedapy][:virtualenv] 
+if not File.exists?(node[:buedapy][:virtualenv] \
         + "/lib/python2.6/site-packages/language_model") then
   open("/tmp/buedapy.tar.gz", "w") do |file|
     obj = AWS::S3::S3Object.find "buedapy.tar.gz", "bueda.deploy"

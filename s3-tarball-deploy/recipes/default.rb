@@ -41,6 +41,7 @@ node[:s3_tarball_deploy].each do |name, config|
 
   link config[:deploy_parent] + "/releases/" + config[:symlink] do
     to config[:deploy_parent] + "/releases/" + config[:deploy_target]
+    not_if do File.exists?(config[:deploy_parent] + "/releases/" + config[:symlink]) end
   end
 
   file "/tmp/#{config[:file]}" do 

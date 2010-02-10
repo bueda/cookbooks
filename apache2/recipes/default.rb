@@ -99,4 +99,4 @@ node[:apache][:web_apps].each do |name, config|
         send(k.to_sym, v)
       end
     end
-end
+end if node[:apache] and node[:apache][:web_apps]

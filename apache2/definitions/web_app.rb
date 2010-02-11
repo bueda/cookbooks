@@ -38,12 +38,12 @@ define :web_app, :template => "web_app.conf.erb" do
       :application_name => application_name,
       :params => params
     )
-    if File.exists?("#{node[:apache][:dir]}/sites-enabled/#{application_name}.conf")
+    if File.exists?("#{node[:apache][:dir]}/sites-enabled/#{params[:order]}-#{application_name}.conf")
       notifies :reload, resources(:service => "apache2"), :delayed
     end
   end
   
-  apache_site "#{params[:name]}.conf" do
+  apache_site "#{params[:order]}-#{params[:name]}.conf" do
     enable enable_setting
   end
 end

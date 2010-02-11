@@ -1,7 +1,9 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
   <% if @params[:aliases] %>
-  ServerAlias <%= @params[:aliases] %>
+  <% @params[:aliases].each do |alias| %>
+  ServerAlias <%= alias %>
+  <% end %>
   <% end %>
   
   LogLevel info

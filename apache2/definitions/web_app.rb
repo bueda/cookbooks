@@ -26,7 +26,7 @@ define :web_app, :template => "web_app.conf.erb" do
   include_recipe "apache2::mod_deflate"
   include_recipe "apache2::mod_headers"
   
-  template "#{node[:apache][:dir]}/sites-available/#{application_name}.conf" do
+  template "#{node[:apache][:dir]}/sites-available/#{params[:order]}-#{application_name}.conf" do
     source params[:template]
     owner "root"
     group "root"

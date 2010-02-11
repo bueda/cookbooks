@@ -1,13 +1,5 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
-  DocumentRoot <%= @params[:docroot] %>
-  
-  <Directory <%= @params[:docroot] %>>
-    Options FollowSymLinks
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-  </Directory>
   
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
@@ -22,7 +14,7 @@
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /site_media <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/bueda/media
+  Alias /site_media <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/web/media
   Alias /robots.txt <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/robots.txt
 
   WSGIScriptAlias / <%= @params[:django_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>

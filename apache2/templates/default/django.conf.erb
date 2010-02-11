@@ -1,19 +1,19 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
-  <% if @params[:aliases] %>
-  <% @params[:aliases].each do |alias| %>
+  <% if @params[:aliases] -%>
+  <% @params[:aliases].each do |alias| -%>
   ServerAlias <%= alias %>
-  <% end %>
-  <% end %>
+  <% end -%>
+  <% end -%>
   
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
-  <% if @params[:behind_load_balancer] %>
+  <% if @params[:behind_load_balancer] -%>
   LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
   CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined-elb
-  <% else %>
+  <% else -%>
   CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
-  <% end %>
+  <% end -%>
 
   RewriteEngine On
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log

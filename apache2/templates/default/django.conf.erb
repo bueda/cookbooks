@@ -1,8 +1,8 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
   <% if @params[:aliases] -%>
-  <% @params[:aliases].each do |alias| -%>
-  ServerAlias <%= alias %>
+  <% @params[:aliases].each do |a| -%>
+  ServerAlias <%= a %>
   <% end -%>
   <% end -%>
   

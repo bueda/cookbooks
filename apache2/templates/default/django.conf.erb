@@ -1,5 +1,8 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
+  <% if @params[:aliases] %>
+  ServerAlias <%= @params[:aliases] %>
+  <% end %>
   
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log

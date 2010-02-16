@@ -22,7 +22,7 @@
   Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media
   Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
 
-  <%= if @params[:admin_media] %>
+  <% if @params[:admin_media] %>
   Alias /media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
   <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
     Options FollowSymLinks

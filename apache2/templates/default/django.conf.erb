@@ -19,10 +19,21 @@
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /site_media <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/web/media
-  Alias /robots.txt <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/robots.txt
+  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media
+  Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
 
-  WSGIScriptAlias / <%= @params[:django_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
+  <%= if @params[:admin_media] %>
+  Alias /media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
+  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
+    Options FollowSymLinks
+    Options -Indexes
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+  <% end %>
+
+  WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
   WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
   WSGIProcessGroup <%= @params[:wsgi_process_group] %>
 </VirtualHost>

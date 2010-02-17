@@ -30,6 +30,12 @@ $template PerHostNewsNotice,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/
 $template PerHostDebug,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/debug"
 $template PerHostMessages,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/messages"
 
+$template PerHostDjangoAPI,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django-api.log"
+$template PerHostDjangoWeb,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django-web.log"
+
+local0.*                ?PerHostDjangoAPI
+local1.*                ?PerHostDjangoWeb
+
 auth,authpriv.*         ?PerHostAuth
 *.*;auth,authpriv.none  -?PerHostSyslog
 cron.*                  ?PerHostCron

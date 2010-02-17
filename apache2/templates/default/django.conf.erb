@@ -1,26 +1,39 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
-  DocumentRoot <%= @params[:docroot] %>
-  
-  <Directory <%= @params[:docroot] %>>
-    Options FollowSymLinks
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-  </Directory>
+  <% if @params[:aliases] -%>
+  <% @params[:aliases].each do |a| -%>
+  ServerAlias <%= a %>
+  <% end -%>
+  <% end -%>
   
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  <% if @params[:behind_load_balancer] -%>
+  LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
+  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined-elb
+  <% else -%>
   CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  <% end -%>
 
   RewriteEngine On
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /site_media <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/bueda/media
-  Alias /robots.txt <%= @params[:django_dir] + "/" + @params[:head_symlink] %>/robots.txt
+  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media
+  Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
 
-  WSGIScriptAlias / <%= @params[:django_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
+  <% if @params[:admin_media] %>
+  Alias /media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
+  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
+    Options FollowSymLinks
+    Options -Indexes
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+  <% end %>
+
+  WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
   WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
   WSGIProcessGroup <%= @params[:wsgi_process_group] %>
 </VirtualHost>

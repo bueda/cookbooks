@@ -37,18 +37,12 @@ node[:users].each do |username, config|
   add_keys username do
     conf config
   end if config[:ssh_keys]
-end unless not node[:users]
 
-node[:groups].each do |group_name, group_config|
-  users = node[:users].find_all { |u| u.last[:groups] \
-        and u.last[:groups].include?(group_name) }
-  users.each do |u, config|
-    config[:groups].each do |g|
-      group g do
-        members [ u ]
-        append true
-        action [:modify]
-      end
-    end    
-  end
-end
+  config[:groups].each do |g|
+    group g do
+      members [ username ]
+      append true
+      action [:modify]
+    end
+  end if config[:groups]
+end unless not node[:users]

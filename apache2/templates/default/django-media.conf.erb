@@ -1,18 +1,32 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
-  DocumentRoot <%= @params[:parent_dir] + @params[:docroot] %>
+  DocumentRoot <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot] %>
 
   LogLevel info
   ErrorLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
+  <% if @params[:behind_load_balancer] %>
+  LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
+  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined-elb
+  <% else %>
   CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  <% end %>
   
-  <Directory <%= @params[:parent_dir] + @params[:docroot] %>>
-    Options FollowSymLinks, -Indexes
+  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot] %>>
+    Options FollowSymLinks
+    Options -Indexes
     AllowOverride None
     Order allow,deny
     Allow from all
   </Directory>
 
-  Alias /admin/ <%= @params[:parent_dir] + @params[:admin_media] %>
+  Alias /admin <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
+
+  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
+    Options FollowSymLinks
+    Options -Indexes
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
   
 </VirtualHost>

@@ -60,7 +60,7 @@ when "ubuntu"
   end
 end
 
-node[:rsyslog].each do |conf|
+node[:rsyslog][:conf].each do |conf|
   template "/etc/rsyslog.d/#{conf}.conf" do
     source "#{conf}.conf.erb"
     backup false

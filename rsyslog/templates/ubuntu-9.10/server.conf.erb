@@ -32,9 +32,13 @@ $template PerHostMessages,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/me
 
 $template PerHostDjangoAPI,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django-api.log"
 $template PerHostDjangoWeb,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django-web.log"
+$template PerHostApacheError,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/apache2/error.log"
+$template PerHostApacheAccess,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/apache2/access.log"
 
 local0.*                ?PerHostDjangoAPI
 local1.*                ?PerHostDjangoWeb
+local2.*                ?PerHostApacheError
+local3.*                ?PerHostApacheAccess
 
 auth,authpriv.*         ?PerHostAuth
 *.*;auth,authpriv.none  -?PerHostSyslog

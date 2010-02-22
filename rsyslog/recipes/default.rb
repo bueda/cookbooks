@@ -59,3 +59,13 @@ when "ubuntu"
     end
   end
 end
+
+node[:rsyslog].each do |conf|
+  template "/etc/rsyslog.d/#{conf}.conf" do
+    source "#{conf}.conf.erb"
+    backup false
+    owner "root"
+    group "root"
+    mode 0644
+  end
+end unless not node[:rsyslog] or not node[:rsyslog][:conf]

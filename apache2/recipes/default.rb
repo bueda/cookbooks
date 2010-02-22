@@ -13,8 +13,7 @@
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# See the License for the specific language governing permissions and # limitations under the License.
 #
 
 package "apache2" do
@@ -93,6 +92,10 @@ apache_site "000-default" do
   action :disable
 end
 
+apache_site "default" do
+  action :disable
+end
+
 node[:apache][:web_apps].each do |name, config|
     web_app name do
       config.each do |k,v|
@@ -100,3 +103,8 @@ node[:apache][:web_apps].each do |name, config|
       end
     end
 end if node[:apache] and node[:apache][:web_apps]
+
+remote_file "/usr/local/bin/apache2_syslog.pl" do
+  source "apache2_syslog.pl"
+  mode "0755"
+end

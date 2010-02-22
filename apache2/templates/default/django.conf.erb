@@ -10,9 +10,9 @@
   ErrorLog syslog:local2
   <% if @params[:behind_load_balancer] -%>
   LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
-  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined-elb
+  CustomLog |/usr/local/bin/apache2_syslog.pl combined-elb
   <% else -%>
-  CustomLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
+  CustomLog |/usr/local/bin/apache2_syslog.pl combined
   <% end -%>
 
   RewriteEngine On

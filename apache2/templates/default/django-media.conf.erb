@@ -19,8 +19,12 @@
     Allow from all
   </Directory>
 
-  Alias /admin <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
+  Alias /favicon.ico /images/favicon.ico
+  <Location "/favicon.ico">
+    SetHandler None
+  </Location>
 
+  Alias /admin <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
   <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
     Options FollowSymLinks
     Options -Indexes
@@ -28,5 +32,6 @@
     Order allow,deny
     Allow from all
   </Directory>
+
   
 </VirtualHost>

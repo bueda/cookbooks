@@ -33,6 +33,11 @@
   </Directory>
   <% end %>
 
+  Alias /favicon.ico /site_media/images/favicon.ico
+  <Location "/favicon.ico">
+    SetHandler None
+  </Location>
+
   WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
   WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
   WSGIProcessGroup <%= @params[:wsgi_process_group] %>

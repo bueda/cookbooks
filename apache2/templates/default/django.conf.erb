@@ -33,7 +33,7 @@
   </Directory>
   <% end %>
 
-  Alias /favicon.ico /site_media/images/favicon.ico
+  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media/images/favicon.ico
   <Location "/favicon.ico">
     SetHandler None
   </Location>

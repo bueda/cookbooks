@@ -19,7 +19,7 @@
     Allow from all
   </Directory>
 
-  Alias /favicon.ico /images/favicon.ico
+  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot]/images/favicon.ico
   <Location "/favicon.ico">
     SetHandler None
   </Location>

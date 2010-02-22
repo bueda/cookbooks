@@ -1,0 +1,25 @@
+<VirtualHost *:<%= @params[:port] %>>
+  ServerName <%= @params[:name] %>
+  <% if @params[:aliases] -%>
+  <% @params[:aliases].each do |a| -%>
+  ServerAlias <%= a %>
+  <% end -%>
+  <% end -%>
+  
+  LogLevel info
+  ErrorLog syslog:local2
+  <% if @params[:behind_load_balancer] -%>
+  LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
+  CustomLog |/usr/local/bin/apache2_syslog.pl combined-elb
+  <% else -%>
+  CustomLog |/usr/local/bin/apache2_syslog.pl combined
+  <% end -%>
+
+  RewriteEngine On
+  RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
+  RewriteLogLevel 0
+
+  WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
+  WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
+  WSGIProcessGroup <%= @params[:wsgi_process_group] %>
+</VirtualHost>

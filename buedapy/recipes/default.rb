@@ -2,11 +2,6 @@ include_recipe "s3"
 require "aws/s3"
 require 'resource/pip_package.rb'
 
-p = package "swig" do
-  action :nothing
-end
-p.run_action :install
-
 AWS::S3::Base.establish_connection!(
     :access_key_id     => node[:s3][:access_key_id],
     :secret_access_key => node[:s3][:secret_access_key]

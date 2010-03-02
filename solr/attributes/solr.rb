@@ -1,0 +1,5 @@
+set_unless[:solr][:java_home] = "/usr/lib/jvm/default-java"
+set_unless[:solr][:java_opts] = "-Dsolr.solr.home=/opt/solr/solr $JAVA_OPTIONS"
+set_unless[:solr][:home] = "/mnt/solr"
+set_unless[:solr][:user] = "solr"
+set_unless[:solr][:log_path] = "/var/log/solr"

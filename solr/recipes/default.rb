@@ -5,6 +5,8 @@
 
 require 'digest/sha1'
 
+package "default-jdk"
+
 directory "/var/log/solr" do
   owner "solr"
   group "bueda"
@@ -32,8 +34,8 @@ end
 
 remote_file "/tmp/apache-solr-1.4.0.tgz" do
   source "http://mirror.cloudera.com/apache/lucene/solr/1.4.0/apache-solr-1.4.0.tgz"
-  owner "root"
-  group "root"
+  owner "solr"
+  group "bueda"
   mode 0755
 end
 
@@ -46,6 +48,8 @@ execute "mv /tmp/apache-solr-1.4.0/example #{node[:solr][:home]}" do
   creates node[:solr][:home]
   action :run
 end
+
+execute "chown -R solr:bueda /mnt/solr"
 
 remote_file "#{node[:solr][:home]}/etc/jetty-logging.xml" do
   source "jetty-logging.xml"

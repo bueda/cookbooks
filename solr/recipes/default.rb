@@ -48,7 +48,7 @@ end
 
 #TODO how will we change this for different data sources?
 remote_file "#{node[:solr][:home]}/solr/conf/schema.xml" do
-  source "schema.xml"
+  source node[:solr][:schema]
   owner "solr"
   group "bueda"
   mode 0755

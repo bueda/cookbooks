@@ -30,12 +30,20 @@ template "/etc/default/jetty" do
   })
 end
 
-execute "install solr example package" do
-  command("if [ ! -e /data/#{app}/jettyapps/solr ]; then cd /data/#{app}/jettyapps && " +
-          "wget -O apache-solr-1.3.0.tgz http://mirror.cc.columbia.edu/pub/software/apache/lucene/solr/1.3.0/apache-solr-1.3.0.tgz && " +
-          "tar -xzf apache-solr-1.3.0.tgz && " +
-          "mv apache-solr-1.3.0/example solr && " + 
-          "rm -rf apache-solr-1.3.0; fi")
+remote_file "/tmp/apache-solr-1.4.0.tgz" do
+  source "http://mirror.cloudera.com/apache/lucene/solr/1.4.0/apache-solr-1.4.0.tgz"
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+execute "tar -xzf /tmp/apache-solr-1.4.0.tgz -C /tmp apache-solr-1.4.0/example" do
+  creates "/tmp/apache-solr-1.4.0"
+  action :run
+end
+
+execute "mv /tmp/apache-solr-1.4.0/example #{node[:solr][:home]}" do
+  creates node[:solr][:home]
   action :run
 end
 

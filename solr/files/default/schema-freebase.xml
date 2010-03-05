@@ -8,6 +8,8 @@
     -->
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
 
+    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+
     <!-- A text field that only splits on whitespace for exact matching of words -->
     <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
       <analyzer>
@@ -77,27 +79,23 @@
  <fields>
    <field name="id" type="string" indexed="true" stored="true" required="true" /> 
    <field name="name" type="freebase_name" indexed="false" stored="true"/>
+   <field name="strict_name" type="string" indexed="true" stored="false"/>
    <field name="freebase_keys" type="string" indexed="false" stored="false"/>
-   <field name="wikipedia_keys" type="string" indexed="false" stored="false"/>
-   <field name="type" type="string" indexed="false" stored="true"/>
-   <field name="description" type="text" indexed="false" stored="false"/>
-   <field name="alias" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-
-   <!-- catchall field, containing all other searchable text fields (implemented
-        via copyField further on in this schema  -->
-   <field name="text" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-
+   <field name="wikipedia_keys" type="string" indexed="false" stored="true"/>
+   <field name="types" type="string" indexed="true" stored="true" omitNorms="true"/>
+   <field name="description" type="text" indexed="true" stored="false" omitNorms="true"/>
+   <field name="aliases" type="text" indexed="true" stored="true" multiValued="true" omitNorms="true"/>
+   <field name="length" type="int" indexed="true" stored="false"/>
+   <field name="popularity" type="int" indexed="true" stored="true"/>
+   <field name="graph_node_id" type="int" indexed="true" stored="true"/>
  </fields>
 
- <copyField source="description" dest="text"/>
- <copyField source="alias" dest="text"/>
- <copyField source="name" dest="text"/>
- <copyField source="type" dest="text"/>
+ <copyField source="name" dest="strict_name"/>
 
  <uniqueKey>id</uniqueKey>
 
  <!-- field for the QueryParser to use when an explicit fieldname is absent -->
- <defaultSearchField>text</defaultSearchField>
+ <defaultSearchField>aliases</defaultSearchField>
 
  <solrQueryParser defaultOperator="OR"/>
 

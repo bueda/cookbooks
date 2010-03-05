@@ -78,7 +78,7 @@
 
  <fields>
    <field name="id" type="string" indexed="true" stored="true" required="true" /> 
-   <field name="name" type="freebase_name" indexed="false" stored="true"/>
+   <field name="name" type="freebase_name" indexed="true" stored="true"/>
    <field name="strict_name" type="string" indexed="true" stored="false"/>
    <field name="freebase_keys" type="string" indexed="false" stored="false"/>
    <field name="wikipedia_keys" type="string" indexed="false" stored="true"/>

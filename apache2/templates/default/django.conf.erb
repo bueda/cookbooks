@@ -19,7 +19,7 @@
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media
+  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:media] %>
   Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
 
   <% if @params[:admin_media] %>
@@ -33,7 +33,7 @@
   </Directory>
   <% end %>
 
-  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/web/media/images/favicon.ico
+  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:media] %>images/favicon.ico
   <Location "/favicon.ico">
     SetHandler None
   </Location>

@@ -3,6 +3,8 @@
 # Recipe:: default
 #
 
+include_recipe "s3"
+require "aws/s3"
 require 'digest/sha1'
 
 AWS::S3::Base.establish_connection!(

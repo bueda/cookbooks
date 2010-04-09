@@ -23,6 +23,10 @@
 
   <% if @params[:media] %>
   Alias /site_media <%= @params[:parent_dir] + "/" + @node[:head_symlink] + "/" + @params[:media] %>
+  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @node[:head_symlink] + "/" + @params[:media] %>images/favicon.ico
+  <Location "/favicon.ico">
+    SetHandler None
+  </Location>
   <% end %>
 
   <% if @params[:admin_media] %>
@@ -36,12 +40,8 @@
   </Directory>
   <% end %>
 
-  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:media] %>images/favicon.ico
-  <Location "/favicon.ico">
-    SetHandler None
-  </Location>
 
   WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
-  WSGIDaemonProcess <%= @params[:name] %> user=<%= @node[:wsgi_user] %> group=<%= @node[:wsgi_group] %> processes=1 threads=10
-  WSGIProcessGroup <%= @params[:name] %>
+  WSGIDaemonProcess <%= @params[:wsgi_name] %> user=<%= @node[:wsgi_user] %> group=<%= @node[:wsgi_group] %> processes=1 threads=10
+  WSGIProcessGroup <%= @params[:wsgi_name] %>
 </VirtualHost>

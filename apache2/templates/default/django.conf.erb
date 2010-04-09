@@ -19,8 +19,11 @@
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:media] %>
   Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
+
+  <% if @params[:media] %>
+  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:media] %>
+  <% end %>
 
   <% if @params[:admin_media] %>
   Alias /media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:admin_media] %>

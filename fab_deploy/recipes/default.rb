@@ -36,7 +36,7 @@ node[:fab_deploy].each do |name, config|
 
   bash "fab" do
     user config[:owner]
-    cwd "/tmp/#{config[:extracted_folder]}"
+    cwd "/tmp/#{name}"
     code "fab localhost deploy"
   end
 end

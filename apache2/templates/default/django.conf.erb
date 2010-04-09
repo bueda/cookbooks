@@ -19,15 +19,15 @@
   RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
   RewriteLogLevel 0
 
-  Alias /robots.txt <%= @params[:parent_dir] + "/" + @params[:head_symlink] %>/robots.txt
+  Alias /robots.txt <%= @params[:parent_dir] + "/" + @node[:head_symlink] %>/robots.txt
 
   <% if @params[:media] %>
-  Alias /site_media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:media] %>
+  Alias /site_media <%= @params[:parent_dir] + "/" + @node[:head_symlink] + "/" + @params[:media] %>
   <% end %>
 
   <% if @params[:admin_media] %>
-  Alias /media <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:admin_media] %>
-  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
+  Alias /media <%= @params[:parent_dir] + "/" + @node[:head_symlink] + "/" + @params[:admin_media] %>
+  <Directory <%= @params[:parent_dir] + "/" + @node[:head_symlink] + @params[:admin_media] %>>
     Options FollowSymLinks
     Options -Indexes
     AllowOverride None
@@ -42,6 +42,6 @@
   </Location>
 
   WSGIScriptAlias / <%= @params[:parent_dir] + "/" + @params[:head_symlink] + "/" + @params[:wsgi_script] %>
-  WSGIDaemonProcess <%= @params[:wsgi_process_name] %> user=<%= @params[:wsgi_user] %> group=<%= @params[:wsgi_group] %> processes=1 threads=10
-  WSGIProcessGroup <%= @params[:wsgi_process_group] %>
+  WSGIDaemonProcess <%= @params[:name] %> user=<%= @node[:wsgi_user] %> group=<%= @node[:wsgi_group] %> processes=1 threads=10
+  WSGIProcessGroup <%= @params[:name] %>
 </VirtualHost>

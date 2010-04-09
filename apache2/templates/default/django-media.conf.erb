@@ -1,6 +1,8 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
+  <% if @params[:docroot] %>
   DocumentRoot <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot] %>
+  <% end %>
 
   LogLevel info
   ErrorLog syslog:local2

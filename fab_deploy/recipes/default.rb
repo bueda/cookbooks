@@ -25,16 +25,20 @@ execute "easy_install fabric"
 execute "easy_install pip"
 execute "easy_install virtualenv"
 
-remote_file "/tmp/fab_shared.py" do
-  source config[:source]
-  owner config[:owner]
-  group config[:group]
+remote_file "/root/fab_shared.py" do
+  source "s3://bueda.deploy/fab_shared.py"
+  access_key_id node[:s3][:access_key_id]
+  secret_access_key node[:s3][:secret_access_key]
+  owner "root"
+  group "root"
   mode 0755
 end
 
 node[:fab_deploy].each do |name, config|
   remote_file "/tmp/#{name}.tar.gz" do
     source config[:source]
+    access_key_id node[:s3][:access_key_id]
+    secret_access_key node[:s3][:secret_access_key]
     owner config[:owner]
     group config[:group]
     mode 0755

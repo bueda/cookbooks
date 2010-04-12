@@ -16,8 +16,20 @@
 # limitations under the License.
 #
 
-class Chef::Provider::RemoteFile
-  include S3RemoteFile
+# TODO use this once chef is updated on servers
+# easy_install_package "fabric"
+# easy_install_package "pip"
+# easy_install_package "virtualenv"
+
+execute "easy_install fabric"
+execute "easy_install pip"
+execute "easy_install virtualenv"
+
+remote_file "/tmp/fab_shared.py" do
+  source config[:source]
+  owner config[:owner]
+  group config[:group]
+  mode 0755
 end
 
 node[:fab_deploy].each do |name, config|
@@ -37,6 +49,7 @@ node[:fab_deploy].each do |name, config|
   bash "fab" do
     user config[:owner]
     cwd "/tmp/#{name}"
-    code "fab localhost deploy"
+    # TODO better way to handle the path, witha config param?
+    code "PYTHONPATH=/root fab localhost deploy:skip_tests=True"
   end
 end

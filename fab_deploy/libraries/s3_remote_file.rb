@@ -16,23 +16,45 @@
 # limitations under the License.
 #
 
-require "aws/s3"
+require 'aws/s3'
 
-module S3RemoteFile
+class Chef::Resource::RemoteFile
+  def access_key_id(args=nil)
+    set_or_return(
+      :access_key_id,
+      args,
+      :kind_of => String
+    )
+  end
+    
+  def secret_access_key(args=nil)
+    set_or_return(
+      :secret_access_key,
+      args,
+      :kind_of => String
+    )
+  end
+end 
+
+
+class Chef::Provider::RemoteFile
   def get_from_uri(source)
     begin
       uri = URI.parse(source)
       if uri.absolute
         if uri.scheme == "s3"
           AWS::S3::Base.establish_connection!(
-              :access_key_id     => uri.user,
-              :secret_access_key => uri.password
+              :access_key_id     => @new_resource.access_key_id,
+              :secret_access_key => @new_resource.secret_access_key
           )
-          name = u.path[1..-1]
-          bucket = u.host
+          name = uri.path[1..-1]
+          bucket = uri.host
           obj = AWS::S3::S3Object.find name, bucket
           Chef::Log.debug("Downloading #{name} from S3 bucket #{bucket}")
-          Tempfile.new("chef-s3-file").write obj.value
+          file = Tempfile.new("chef-s3-file")
+          file.write obj.value
+          file.close
+          file
         else
           r = Chef::REST.new(source, nil, nil)
           Chef::Log.debug("Downloading from absolute URI: #{source}")

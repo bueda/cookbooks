@@ -53,7 +53,7 @@ node[:fab_deploy].each do |name, config|
   bash "fab" do
     user config[:owner]
     cwd "/tmp/#{name}"
-    environment {:PYTHONPATH => '/root'}
-    code "fab localhost deploy:skip_tests=True,assume_yes=True"
+    environment 'PYTHONPATH' => '/root'
+    code "fab localhost deploy:release=HEAD,skip_tests=True,assume_yes=True"
   end
 end

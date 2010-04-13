@@ -1,7 +1,7 @@
 <VirtualHost *:<%= @params[:port] %>>
   ServerName <%= @params[:name] %>
   <% if @params[:docroot] %>
-  DocumentRoot <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot] %>
+  DocumentRoot <%= "#{@params[:parent_dir]}/#{@node[:apache][:web_apps][:head_symlink]}/#{@params[:docroot]}" %>
   <% end %>
 
   LogLevel info
@@ -13,7 +13,7 @@
   CustomLog |/usr/local/bin/apache2_syslog.pl combined
   <% end %>
   
-  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot] %>>
+  <Directory <%= "#{@params[:parent_dir]}/#{@node[:apache][:web_apps][:head_symlink]}/#{@params[:docroot]}" %>>
     Options FollowSymLinks
     Options -Indexes
     AllowOverride None
@@ -21,13 +21,13 @@
     Allow from all
   </Directory>
 
-  Alias /favicon.ico <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:docroot]/images/favicon.ico
+  Alias /favicon.ico <%= "#{@params[:parent_dir]}/#{@node[:apache][:web_apps][:head_symlink]}/#{@params[:docroot]}" %>/images/favicon.ico
   <Location "/favicon.ico">
     SetHandler None
   </Location>
 
-  Alias /admin <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>
-  <Directory <%= @params[:parent_dir] + "/" + @params[:head_symlink] + @params[:admin_media] %>>
+  Alias /admin <%= "#{@params[:parent_dir]}/#{@node[:apache][:web_apps][:head_symlink]}/#{@params[:admin_media]}" %>
+  <Directory <%= "#{@params[:parent_dir]}/#{@node[:apache][:web_apps][:head_symlink]}/#{@params[:admin_media]}" %>>
     Options FollowSymLinks
     Options -Indexes
     AllowOverride None
@@ -35,5 +35,4 @@
     Allow from all
   </Directory>
 
-  
 </VirtualHost>

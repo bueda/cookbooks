@@ -45,15 +45,28 @@ node[:fab_deploy].each do |name, config|
   end
 
   bash "extract" do
+    action :nothing
     user config[:owner]
     cwd "/tmp"
     code "tar -xzf /tmp/#{name}.tar.gz"
+    subscribes :run, resources(:remote_file => "/tmp/#{name}.tar.gz"), :immediately
   end
 
   bash "fab" do
+    action :nothing
     user config[:owner]
     cwd "/tmp/#{name}"
     environment 'PYTHONPATH' => '/root'
     code "fab localhost deploy:release=HEAD,skip_tests=True,assume_yes=True"
+    subscribes :run, resources(:bash => "extract"), :immediately
+  end
+
+  bash "cleanup" do
+    action :nothing
+    user config[:owner]
+    cwd "/tmp"
+    code "rm -rf #{name} #{name}.tar.gz"
+    ignore_failure true
+    subscribes :run, resources(:remote_file => "/tmp/#{name}.tar.gz")
   end
 end

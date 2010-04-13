@@ -12,8 +12,8 @@ node[:s3][:files].each do |name, config|
     source "s3://#{config[:bucket]}/#{config[:file]}"
     access_key_id node[:s3][:access_key_id]
     secret_access_key node[:s3][:secret_access_key]
-    owner "bueda"
-    group "deploy"
+    owner "deploy"
+    group "bueda"
     mode 0755
   end
 
@@ -21,7 +21,7 @@ node[:s3][:files].each do |name, config|
     action :nothing
     user config[:owner]
     cwd File.dirname(name)
-    code "#{config[:extract_command} #{File.basename(name)}"
-    subscribes :run, resource(:remote_file => name), :immediately
-  end if config[:extract]
+    code "#{config[:extract_command]} #{File.basename(name)}"
+    subscribes :run, resources(:remote_file => name), :immediately
+  end if config[:extract_command]
 end

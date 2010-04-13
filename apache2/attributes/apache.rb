@@ -76,6 +76,6 @@ set_unless[:apache][:worker][:maxsparethreads] = 192
 set_unless[:apache][:worker][:threadsperchild] = 64
 set_unless[:apache][:worker][:maxrequestsperchild] = 0
 
-set_unless[:apache][:web_apps][:head_symlink] = "current"
-set_unless[:apache][:web_apps][:wsgi_user] = "www-data"
-set_unless[:apache][:web_apps][:wsgi_group] = "bueda"
+set_unless[:apache][:head_symlink] = "current"
+set_unless[:apache][:wsgi_user] = "www-data"
+set_unless[:apache][:wsgi_group] = "bueda"

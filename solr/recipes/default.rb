@@ -3,15 +3,6 @@
 # Recipe:: default
 #
 
-include_recipe "s3"
-require "aws/s3"
-require 'digest/sha1'
-
-AWS::S3::Base.establish_connection!(
-    :access_key_id     => node[:s3][:access_key_id],
-    :secret_access_key => node[:s3][:secret_access_key]
-)
-
 package "default-jdk"
 
 directory "/var/log/solr" do
@@ -72,14 +63,6 @@ remote_file "#{node[:solr][:home]}/solr/conf/schema.xml" do
   group "bueda"
   mode 0755
 end
-
-#TODO config parameterize this
-open("/tmp/freebase-index.tar.gz", "w") do |file|
-  obj = AWS::S3::S3Object.find "freebase-index.tar.gz", "bueda.deploy"
-  file.write obj.value
-end unless File.exists?("/tmp/freebase-index.tar.gz")
-
-execute "tar -xzf /tmp/index.tar.gz -C #{node[:solr][:home]}/solr/data/"
 
 service "jetty" do
   action [:enable, :start]

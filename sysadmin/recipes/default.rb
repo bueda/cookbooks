@@ -2,7 +2,7 @@ package "vim-gnome"
 package "ack-grep"
 package "htop"
 
-#TODO grab bulk data from S3
+bash "ln -fs /bin/bash /bin/sh"
 
 node[:sysadmin][:files].each do |file|
   remote_file "/usr/local/bin/#{file}" do

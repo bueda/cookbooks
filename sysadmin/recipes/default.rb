@@ -2,7 +2,9 @@ package "vim-gnome"
 package "ack-grep"
 package "htop"
 
-bash "ln -fs /bin/bash /bin/sh"
+bash "switch sh to bash" do
+  code "ln -fs /bin/bash /bin/sh"
+end
 
 node[:sysadmin][:files].each do |file|
   remote_file "/usr/local/bin/#{file}" do

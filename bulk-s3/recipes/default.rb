@@ -1,21 +1,27 @@
 include_recipe "s3"
-require "aws/s3"
-
-AWS::S3::Base.establish_connection!(
-    :access_key_id     => node[:s3][:access_key_id],
-    :secret_access_key => node[:s3][:secret_access_key]
-)
 
 node[:s3][:files].each do |name, config|
-  directory config[:directory] do
+  directory File.dirname(name) do
     owner config[:owner]
     group config[:group]
-    mode "0774"
+    mode 0775
     recursive true
   end
 
-  open(config[:directory] + "/" + name, "w") do |file|
-    obj = AWS::S3::S3Object.find config[:name], config[:bucket]
-    file.write obj.value
-  end unless File.exists?(config[:directory] + "/" + name)
+  remote_file name do
+    source "s3://#{config[:bucket]}/#{config[:file]}"
+    access_key_id node[:s3][:access_key_id]
+    secret_access_key node[:s3][:secret_access_key]
+    owner "bueda"
+    group "deploy"
+    mode 0755
+  end
+
+  bash "extract" do
+    action :nothing
+    user config[:owner]
+    cwd File.dirname(name)
+    code "#{config[:extract_command} #{File.basename(name)}"
+    subscribes :run, resource(:remote_file => name), :immediately
+  end if config[:extract]
 end

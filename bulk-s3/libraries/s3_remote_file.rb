@@ -55,10 +55,6 @@ class Chef::Provider::RemoteFile
           file.write obj.value
           file.close
           file
-        else
-          r = Chef::REST.new(source, nil, nil)
-          Chef::Log.debug("Downloading from absolute URI: #{source}")
-          r.get_rest(source, true).open
         end
       end
     rescue URI::InvalidURIError

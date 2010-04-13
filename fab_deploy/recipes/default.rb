@@ -53,7 +53,7 @@ node[:fab_deploy].each do |name, config|
   bash "fab" do
     user config[:owner]
     cwd "/tmp/#{name}"
-    # TODO better way to handle the path, witha config param?
-    code "PYTHONPATH=/root fab localhost deploy:skip_tests=True"
+    environment {:PYTHONPATH => '/root'}
+    code "fab localhost deploy:skip_tests=True,assume_yes=True"
   end
 end

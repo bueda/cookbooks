@@ -12,4 +12,4 @@ define :add_keys do
     mode 0600
     not_if { defined?(node[:users][name][:preserve_keys]) ? node[:users][name][:preserve_keys] : false }
   end
-end if keys
+end

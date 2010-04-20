@@ -57,7 +57,7 @@ node[:fab_deploy].each do |name, config|
     user config[:owner]
     cwd "/tmp/#{name}"
     environment 'PYTHONPATH' => '/root'
-    code "fab localhost deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
+    code "fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
     subscribes :run, resources(:bash => "extract #{name}"), :immediately
   end
 

@@ -1,38 +1,29 @@
 {
-  "replacing": {
-
-  },
-  "long_description": "",
-  "attributes": {
-
-  },
-  "maintainer": "37signals",
-  "recommendations": {
-
-  },
-  "license": "Apache v2.0",
-  "recipes": {
-    "users": ""
-  },
-  "maintainer_email": "sysadmins@37signals.com",
-  "suggestions": {
-
-  },
-  "dependencies": {
-
-  },
-  "conflicting": {
-
-  },
-  "platforms": {
-
-  },
-  "description": "Configures users and groups",
-  "version": "0.1.0",
-  "name": "users",
-  "providing": {
-    "users": [
-
-    ]
+    "suggestions": {
+    },
+    "license": "Apache v2.0",
+    "maintainer_email": "ops@bueda.com",
+    "conflicting": {
+    },
+    "platforms": {
+    },
+    "providing": {
+    },
+    "description": "Configures users and groups",
+    "recipes": {
+    },
+    "attributes": {
+    },
+    "replacing": {
+    },
+    "version": "0.1.0",
+    "dependencies": {
+    },
+    "groupings": {
+    },
+    "long_description": "",
+    "name": "users",
+    "recommendations": {
+    },
+    "maintainer": "Bueda"
   }
-}

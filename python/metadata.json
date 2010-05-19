@@ -9,7 +9,7 @@
     },
     "providing": {
     },
-    "description": "Installs mod-wsgi to Apache",
+    "description": "Install Python and other distribution Python packages",
     "recipes": {
     },
     "attributes": {
@@ -22,7 +22,7 @@
     "groupings": {
     },
     "long_description": "",
-    "name": "wsgi",
+    "name": "python",
     "recommendations": {
     },
     "maintainer": "Bueda"

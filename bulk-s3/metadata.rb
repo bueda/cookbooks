@@ -1,4 +1,4 @@
 maintainer        "Bueda"
 maintainer_email  "ops@bueda.com"
-description       "Installs mod-wsgi to Apache"
+description       "Download bulk data from S3"
 version           "0.1"

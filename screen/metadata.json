@@ -9,7 +9,7 @@
     },
     "providing": {
     },
-    "description": "Installs mod-wsgi to Apache",
+    "description": "Installs GNU screen",
     "recipes": {
     },
     "attributes": {
@@ -22,7 +22,7 @@
     "groupings": {
     },
     "long_description": "",
-    "name": "wsgi",
+    "name": "screen",
     "recommendations": {
     },
     "maintainer": "Bueda"

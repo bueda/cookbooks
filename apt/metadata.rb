@@ -1,4 +1,4 @@
 maintainer        "Bueda"
 maintainer_email  "ops@bueda.com"
-description       "Installs mod-wsgi to Apache"
+description       "Update apt and upgrade all packages"
 version           "0.1"

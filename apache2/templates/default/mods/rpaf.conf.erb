@@ -1,8 +1,0 @@
-<IfModule mod_rpaf.c>
-RPAFenable On
-RPAFsethostname On
-<% if @node[:apache][:rpaf_proxy] %>
-RPAFproxy_ips <%= @node[:apache2][:rpaf_proxy] %>
-<% end %>
-</IfModule>
-

@@ -1,3 +1,7 @@
+package "libshadow-ruby1.8" do
+  action :install
+end
+
 node[:groups].each do |group_key, config|
   group group_key do
     group_name group_key.to_s

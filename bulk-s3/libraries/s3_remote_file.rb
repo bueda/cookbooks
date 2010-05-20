@@ -19,7 +19,7 @@
 require 'rubygems'
 require 'aws/s3'
 
-module S3RemoteFileResource
+class Chef::Resource::RemoteFile
   def access_key_id(args=nil)
     set_or_return(
       :access_key_id,
@@ -38,7 +38,7 @@ module S3RemoteFileResource
 end 
 
 
-module S3RemoteFileProvider
+class Chef::Provider::RemoteFile
   def fetch_from_uri(source)
     begin
       uri = URI.parse(source)
@@ -54,8 +54,11 @@ module S3RemoteFileProvider
           Chef::Log.debug("Downloading #{name} from S3 bucket #{bucket}")
           file = Tempfile.new("chef-s3-file")
           file.write obj.value
-          file.close
-          file
+          begin
+            yield file
+          ensure
+            file.close
+          end
         end
       end
     rescue URI::InvalidURIError

@@ -39,7 +39,7 @@ end
 
 
 class Chef::Provider::RemoteFile
-  def fetch_from_uri(source)
+  def source_file(source, current_checksum, &block)
     begin
       uri = URI.parse(source)
       if uri.absolute
@@ -53,7 +53,8 @@ class Chef::Provider::RemoteFile
           obj = AWS::S3::S3Object.find name, bucket
           Chef::Log.debug("Downloading #{name} from S3 bucket #{bucket}")
           file = Tempfile.new("chef-s3-file")
-          file.write obj.value
+          size = file.write obj.value
+          Chef::Log.debug("Size of file #{name} is #{size}")
           begin
             yield file
           ensure

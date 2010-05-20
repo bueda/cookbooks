@@ -20,7 +20,11 @@ include_recipe "s3"
 
 easy_install_package "fabric"
 easy_install_package "pip"
-easy_install_package "virtualenv"
+
+# easy_install_package checks for module.__path__ which virtualenv
+# doesn't provide. Could be considered a bug in either Chef or virtualenv,
+# but this works for now.
+execute "easy_install virtualenv"
 
 remote_file "/root/fab_shared.py" do
   source "s3://bueda.deploy/fab_shared.py"

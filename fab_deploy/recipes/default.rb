@@ -16,14 +16,11 @@
 # limitations under the License.
 #
 
-# TODO use this once chef is updated on servers
-# easy_install_package "fabric"
-# easy_install_package "pip"
-# easy_install_package "virtualenv"
+include_recipe "s3"
 
-execute "easy_install fabric"
-execute "easy_install pip"
-execute "easy_install virtualenv"
+easy_install_package "fabric"
+easy_install_package "pip"
+easy_install_package "virtualenv"
 
 remote_file "/root/fab_shared.py" do
   source "s3://bueda.deploy/fab_shared.py"

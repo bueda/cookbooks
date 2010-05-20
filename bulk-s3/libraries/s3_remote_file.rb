@@ -16,9 +16,10 @@
 # limitations under the License.
 #
 
+require 'rubygems'
 require 'aws/s3'
 
-class Chef::Resource::RemoteFile
+module S3RemoteFileResource
   def access_key_id(args=nil)
     set_or_return(
       :access_key_id,
@@ -37,8 +38,8 @@ class Chef::Resource::RemoteFile
 end 
 
 
-class Chef::Provider::RemoteFile
-  def get_from_uri(source)
+module S3RemoteFileProvider
+  def fetch_from_uri(source)
     begin
       uri = URI.parse(source)
       if uri.absolute

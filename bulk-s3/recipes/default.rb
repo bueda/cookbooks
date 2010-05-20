@@ -1,5 +1,13 @@
 include_recipe "s3"
 
+class Chef::Resource::RemoteFile
+  include S3RemoteFileResource
+end
+
+class Chef::Provider::RemoteFile
+  include S3RemoteFileProvider
+end
+
 node[:s3][:files].each do |name, config|
   directory File.dirname(name) do
     owner config[:owner]

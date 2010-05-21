@@ -1,29 +1,29 @@
 {
-    "suggestions": {
+    "conflicting": {
     },
     "license": "Apache v2.0",
-    "maintainer_email": "ops@bueda.com",
-    "conflicting": {
+    "providing": {
     },
     "platforms": {
     },
-    "providing": {
-    },
-    "description": "Convert dirs to bind mounts to EC2's ephemeral storage",
     "recipes": {
-    },
-    "attributes": {
     },
     "replacing": {
     },
-    "version": "0.1.0",
-    "dependencies": {
-    },
+    "description": "General bind mounts, usually for throwing logs and such on EC2 ephemeral storage",
     "groupings": {
     },
+    "attributes": {
+    },
     "long_description": "",
-    "name": "ephemeral-log",
+    "version": "0.1.0",
     "recommendations": {
     },
-    "maintainer": "Bueda"
+    "dependencies": {
+    },
+    "maintainer": "Bueda",
+    "name": "bind",
+    "suggestions": {
+    },
+    "maintainer_email": "ops@bueda.com"
   }

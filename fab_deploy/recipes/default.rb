@@ -36,23 +36,6 @@ remote_file "/root/fab_shared.py" do
 end
 
 node[:fab_deploy].each do |name, config|
-  remote_file "/tmp/#{name}.tar.gz" do
-    source config[:source]
-    access_key_id node[:s3][:access_key_id]
-    secret_access_key node[:s3][:secret_access_key]
-    owner config[:owner]
-    group config[:group]
-    mode 0755
-  end
-
-  bash "extract #{name}" do
-    action :nothing
-    user config[:owner]
-    cwd "/tmp"
-    code "tar -xzf /tmp/#{name}.tar.gz"
-    subscribes :run, resources(:remote_file => "/tmp/#{name}.tar.gz"), :immediately
-  end
-
   bash "fab #{name}" do
     action :nothing
     user config[:owner]
@@ -61,15 +44,34 @@ node[:fab_deploy].each do |name, config|
         'AWS_ACCESS_KEY_ID' => node[:s3][:access_key_id],
         'AWS_SECRET_ACCESS_KEY' => node[:s3][:secret_access_key]
     code "cd #{name}; fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
-    subscribes :run, resources(:bash => "extract #{name}"), :immediately
+  end
+
+  bash "extract #{name}" do
+    action :nothing
+    user config[:owner]
+    cwd "/tmp"
+    code "tar -xzf /tmp/#{name}.tar.gz"
+    notifies :run, resources(:bash => "fab #{name}"), :immediately
+  end
+
+  remote_file "/tmp/#{name}.tar.gz" do
+    source config[:source]
+    access_key_id node[:s3][:access_key_id]
+    secret_access_key node[:s3][:secret_access_key]
+    owner config[:owner]
+    group config[:group]
+    mode 0755
+    notifies :run, resources(:bash => "extract #{name}"), :immediately
   end
 
   file "/tmp/#{name}.tar.gz" do
-    action :delete
+    action :nothing
+    subscribes :delete, resources(:remote_file => "/tmp/#{name}.tar.gz")
   end
 
   directory "/tmp/#{name}" do
-    action :delete
+    action :nothing
     recursive true
+    subscribes :delete, resources(:bash => "extract #{name}")
   end
 end

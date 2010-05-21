@@ -56,18 +56,20 @@ node[:fab_deploy].each do |name, config|
   bash "fab #{name}" do
     action :nothing
     user config[:owner]
-    cwd "/tmp/#{name}"
-    environment 'PYTHONPATH' => '/root'
-    code "fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
+    cwd "/tmp"
+    environment 'PYTHONPATH' => '/root',
+        'AWS_ACCESS_KEY_ID' => node[:s3][:access_key_id],
+        'AWS_SECRET_ACCESS_KEY' => node[:s3][:secret_access_key]
+    code "cd #{name}; fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
     subscribes :run, resources(:bash => "extract #{name}"), :immediately
   end
 
-  bash "cleanup #{name}" do
-    action :nothing
-    user config[:owner]
-    cwd "/tmp"
-    code "rm -rf #{name} #{name}.tar.gz"
-    ignore_failure true
-    subscribes :run, resources(:bash => "extract #{name}")
+  file "/tmp/#{name}.tar.gz" do
+    action :delete
+  end
+
+  directory "/tmp/#{name}" do
+    action :delete
+    recursive true
   end
 end

@@ -1,5 +1,5 @@
 <VirtualHost *:<%= @params[:port] %>>
-  ServerName <%= @params[:name] %>
+  ServerName <%= @params[:hostname] or @params[:name] %>
   <% if @params[:docroot] %>
   DocumentRoot <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:docroot]}" %>
   <% end %>

@@ -1,5 +1,5 @@
 <VirtualHost *:<%= @params[:port] %>>
-  ServerName <%= @params[:name] %>
+  ServerName <%= @params[:hostname] or @params[:name] %>
   <% if @params[:aliases] -%>
   <% @params[:aliases].each do |a| -%>
   ServerAlias <%= a %>
@@ -16,8 +16,6 @@
   <% end -%>
 
   RewriteEngine On
-  RewriteLog <%= @node[:apache][:log_dir] %>/<%= @params[:name] %>-rewrite.log
-  RewriteLogLevel 0
 
   WSGIScriptAlias / <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:wsgi_script]}" %>
   WSGIDaemonProcess <%= @params[:wsgi_name] %> user=<%= @node[:apache][:wsgi_user] %> group=<%= @node[:apache][:wsgi_group] %> processes=1 threads=10

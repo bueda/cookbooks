@@ -1,0 +1,29 @@
+{
+    "suggestions": {
+    },
+    "license": "Apache 2.0",
+    "maintainer_email": "ops@bueda.com",
+    "conflicting": {
+    },
+    "platforms": {
+    },
+    "providing": {
+    },
+    "description": "Creates blank mysql databases",
+    "recipes": {
+    },
+    "attributes": {
+    },
+    "replacing": {
+    },
+    "version": "0.1.0",
+    "dependencies": {
+    },
+    "groupings": {
+    },
+    "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES: \n\n= USAGE:\n\n",
+    "name": "mysql-database",
+    "recommendations": {
+    },
+    "maintainer": "Bueda, Inc."
+  }

@@ -1,52 +1,71 @@
-package "libshadow-ruby1.8" do
-  action :install
+groups = search(:groups)
+
+groups.each do |group|
+  group group[:id] do
+    group_name group[:id]
+    gid group[:gid]
+    action [ :create, :modify, :manage ]
+  end
+
+  if node[:active_groups].include?(group[:id])
+    search(:users, "groups:#{group[:id]}").each do |user|
+      home_dir = user[:home_dir] || "/home/#{user[:id]}"
+
+      user user[:id] do
+        comment user[:full_name]
+        uid user[:uid]
+        gid user[:groups].first
+        home home_dir
+        shell user[:shell]
+        supports :manage_home => false
+        action [:create, :manage]
+      end
+      
+      user[:groups].each do |g|
+        group g do
+          group_name g.to_s
+          gid groups.find { |grp| grp[:id] == g }[:gid]
+          members [user[:id]]
+          append true
+          action [ :create, :modify, :manage ]
+        end
+      end
+
+      if (node[:users][:manage_files] || user[:local_files] == true) && File.exists?(home_dir)
+
+        directory "#{home_dir}" do
+          owner user[:id]
+          group user[:groups].first.to_s
+          mode 0700
+        end
+
+        directory "#{home_dir}/.ssh" do
+          action :create
+          owner user[:id]
+          group user[:groups].first.to_s
+          mode 0700
+        end
+
+        template "#{home_dir}/.ssh/authorized_keys" do
+          source "authorized_keys.erb"
+          action :create
+          owner user[:id]
+          group user[:groups].first.to_s
+          variables(:keys => user[:ssh_keys])
+          mode 0600
+        end
+      else
+        log "Not managing files for #{user[:id]} because home directory does not exist or this is not a management host."
+      end
+    end
+  end
 end
 
-node[:groups].each do |group_key, config|
-  group group_key do
-    group_name group_key.to_s
-    gid config[:gid]
-    action [:create, :manage]
-  end
-end unless not node[:groups]
+# Remove initial setup user and group.
+user  "ubuntu" do
+  action :remove
+end
 
-node[:users].each do |username, config|
-  user username do
-    comment config[:comment]
-    uid config[:uid]
-    gid config[:gid]
-    home (config[:home] ? config[:home] : "/home/#{username}")
-    shell (config[:shell] ? config[:shell] : "/bin/bash")
-    password config[:password]
-    supports :manage_home => true
-    action [:create, :manage]
-  end  
-
-  config[:files].each do |filename|
-    remote_file "/home/#{username}/#{filename}" do
-      source "#{username}/#{filename}"
-      mode 0750
-      owner username
-      group config[:gid]
-    end
-  end unless not config[:files]
-  
-  directory "/home/#{username}/.ssh" do
-    action :create
-    owner username
-    group config[:gid]
-    mode 0700
-  end
-  
-  add_keys username do
-    conf config
-  end if config[:ssh_keys]
-
-  config[:groups].each do |g|
-    group g do
-      members [ username ]
-      append true
-      action [:modify]
-    end
-  end if config[:groups]
-end unless not node[:users]
+group "ubuntu" do
+  action :remove
+end

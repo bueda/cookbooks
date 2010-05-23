@@ -22,5 +22,6 @@ include_recipe "mysql::server"
 node[:mysql][:databases].each do |db|
   bash "create db #{db}" do
     code "echo 'CREATE DATABASE #{db};' | mysql -u root -p#{node[:mysql][:server_root_password]}"
+    creates "#{node[:mysql][:datadir]}/#{db}"
   end
 end if node[:mysql] and node[:mysql][:databases]

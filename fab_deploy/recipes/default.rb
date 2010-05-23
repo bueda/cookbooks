@@ -51,7 +51,7 @@ node[:fab_deploy].each do |name, config|
     user config[:owner]
     cwd "/tmp"
     code "tar -xzf /tmp/#{name}.tar.gz"
-    notifies :run, resources(:bash => "fab #{name}"), :immediately
+    notifies :run, resources(:bash => "fab #{name}"), :delayed
   end
 
   remote_file "/tmp/#{name}.tar.gz" do

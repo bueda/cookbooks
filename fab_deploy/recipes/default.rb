@@ -36,14 +36,14 @@ remote_file "/root/fab_shared.py" do
 end
 
 node[:fab_deploy].each do |name, config|
-  bash "fab #{name}" do
+  bash "fab #{config[:unit]}" do
     action :nothing
     user config[:owner]
     cwd "/tmp"
     environment 'PYTHONPATH' => '/root',
         'AWS_ACCESS_KEY_ID' => node[:s3][:access_key_id],
         'AWS_SECRET_ACCESS_KEY' => node[:s3][:secret_access_key]
-    code "cd #{name}; fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
+    code "cd #{config[:unit]}; fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
   end
 
   bash "extract #{name}" do
@@ -51,7 +51,7 @@ node[:fab_deploy].each do |name, config|
     user config[:owner]
     cwd "/tmp"
     code "tar -xzf /tmp/#{name}.tar.gz"
-    notifies :run, resources(:bash => "fab #{name}"), :delayed
+    notifies :run, resources(:bash => "fab #{config[:unit]}"), :delayed
   end
 
   remote_file "/tmp/#{name}.tar.gz" do

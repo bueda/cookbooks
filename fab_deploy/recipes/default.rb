@@ -39,18 +39,18 @@ node[:fab_deploy].each do |name, config|
   bash "fab #{config[:unit]}" do
     action :nothing
     user config[:owner]
-    cwd "/tmp"
+    cwd "/tmp/#{name}/#{config[:unit]}"
     environment 'PYTHONPATH' => '/root',
         'AWS_ACCESS_KEY_ID' => node[:s3][:access_key_id],
         'AWS_SECRET_ACCESS_KEY' => node[:s3][:secret_access_key]
-    code "cd #{config[:unit]}; fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
+    code "fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
   end
 
   bash "extract #{name}" do
     action :nothing
     user config[:owner]
     cwd "/tmp"
-    code "tar -xzf /tmp/#{name}.tar.gz"
+    code "mkdir -p #{name}; cd #{name}; tar -xzf /tmp/#{name}.tar.gz"
     notifies :run, resources(:bash => "fab #{config[:unit]}"), :delayed
   end
 

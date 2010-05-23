@@ -28,21 +28,21 @@ execute "easy_install virtualenv"
 
 remote_file "/root/fab_shared.py" do
   source "s3://bueda.deploy/fab_shared.py"
-  access_key_id node[:s3][:access_key_id]
-  secret_access_key node[:s3][:secret_access_key]
+  access_key_id data_bag_item(:aws, :primary)['access_key_id']
+  secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
   owner "root"
   group "root"
   mode 0755
 end
 
 node[:fab_deploy].each do |name, config|
-  bash "fab #{config[:unit]}" do
+  bash "fab #{name}" do
     action :nothing
     user config[:owner]
     cwd "/tmp/#{name}/#{config[:unit]}"
     environment 'PYTHONPATH' => '/root',
-        'AWS_ACCESS_KEY_ID' => node[:s3][:access_key_id],
-        'AWS_SECRET_ACCESS_KEY' => node[:s3][:secret_access_key]
+        'AWS_ACCESS_KEY_ID' => data_bag_item(:aws, :primary)['access_key_id'],
+        'AWS_SECRET_ACCESS_KEY' => data_bag_item(:aws, :primary)['secret_access_key']
     code "fab localhost:deployment_type=#{config[:deployment_type]} deploy:release=#{config[:tag]},skip_tests=True,assume_yes=True"
   end
 
@@ -51,13 +51,13 @@ node[:fab_deploy].each do |name, config|
     user config[:owner]
     cwd "/tmp"
     code "mkdir -p #{name}; cd #{name}; tar -xzf /tmp/#{name}.tar.gz"
-    notifies :run, resources(:bash => "fab #{config[:unit]}"), :delayed
+    notifies :run, resources(:bash => "fab #{name}"), :delayed
   end
 
   remote_file "/tmp/#{name}.tar.gz" do
     source config[:source]
-    access_key_id node[:s3][:access_key_id]
-    secret_access_key node[:s3][:secret_access_key]
+    access_key_id data_bag_item(:aws, :primary)['access_key_id']
+    secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
     owner config[:owner]
     group config[:group]
     mode 0755

@@ -10,11 +10,12 @@ node[:s3][:files].each do |name, config|
 
   remote_file name do
     source "s3://#{config[:bucket]}/#{config[:file]}"
-    access_key_id node[:s3][:access_key_id]
-    secret_access_key node[:s3][:secret_access_key]
+    access_key_id data_bag_item(:aws, :primary)['access_key_id']
+    secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
     owner "deploy"
     group "bueda"
     mode 0755
+    checksum config[:checksum]
   end
 
   bash "extract" do

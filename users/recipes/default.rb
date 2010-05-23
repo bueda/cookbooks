@@ -17,7 +17,6 @@ groups.each do |group|
         gid user[:groups].first
         home home_dir
         shell user[:shell]
-        supports :manage_home => false
         action [:create, :manage]
       end
       
@@ -31,31 +30,27 @@ groups.each do |group|
         end
       end
 
-      if (node[:users][:manage_files] || user[:local_files] == true) && File.exists?(home_dir)
+      directory "#{home_dir}" do
+        owner user[:id]
+        group user[:groups].first.to_s
+        mode 0700
+      end
 
-        directory "#{home_dir}" do
-          owner user[:id]
-          group user[:groups].first.to_s
-          mode 0700
-        end
+      directory "#{home_dir}/.ssh" do
+        action :create
+        owner user[:id]
+        group user[:groups].first.to_s
+        mode 0700
+      end
 
-        directory "#{home_dir}/.ssh" do
-          action :create
-          owner user[:id]
-          group user[:groups].first.to_s
-          mode 0700
-        end
-
-        template "#{home_dir}/.ssh/authorized_keys" do
-          source "authorized_keys.erb"
-          action :create
-          owner user[:id]
-          group user[:groups].first.to_s
-          variables(:keys => user[:ssh_keys])
-          mode 0600
-        end
-      else
-        log "Not managing files for #{user[:id]} because home directory does not exist or this is not a management host."
+      template "#{home_dir}/.ssh/authorized_keys" do
+        source "authorized_keys.erb"
+        action :create
+        owner user[:id]
+        group user[:groups].first.to_s
+        variables(:keys => user[:ssh_keys])
+        mode 0600
+        only_if do user[:ssh_keys] end
       end
     end
   end

@@ -3,8 +3,8 @@ maintainer_email  "ops@bueda.com"
 description       "Install and configure our web apps"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version           "0.1"
-recipe            "apache2", "Main Apache configuration"
-recipe            "apache2::mod_wsgi", "Apache module 'wsgi' with config file"
+recipe            "apache2-bueda", "Main Apache configuration"
+recipe            "apache2-bueda::mod_wsgi", "Apache module 'wsgi' with config file"
 
 supports 'ubuntu'
 

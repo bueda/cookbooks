@@ -14,8 +14,8 @@
     },
     "description": "Install and configure our web apps",
     "recipes": {
-      "apache2": "Main Apache configuration",
-      "apache2::mod_wsgi": "Apache module 'wsgi' with config file"
+      "apache2-bueda::mod_wsgi": "Apache module 'wsgi' with config file",
+      "apache2-bueda": "Main Apache configuration"
     },
     "attributes": {
       "apache/traceenable": {

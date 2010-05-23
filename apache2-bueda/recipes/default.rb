@@ -17,7 +17,7 @@
 #
 
 include_recipe 'apache2'
-include_recipe "apache2::mod_wsgi"
+include_recipe "apache2-bueda::mod_wsgi"
 
 # Disable default site
 apache_site "default" do

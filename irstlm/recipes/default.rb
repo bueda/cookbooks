@@ -9,8 +9,3 @@ end
 dpkg_package "irstlm" do
   source deb_file
 end
-
-file deb_file do
-  action :nothing
-  subscribes :delete, resources(:remote_file => deb_file)
-end

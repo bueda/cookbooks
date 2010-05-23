@@ -63,15 +63,4 @@ node[:fab_deploy].each do |name, config|
     mode 0755
     notifies :run, resources(:bash => "extract #{name}"), :immediately
   end
-
-  file "/tmp/#{name}.tar.gz" do
-    action :nothing
-    subscribes :delete, resources(:remote_file => "/tmp/#{name}.tar.gz")
-  end
-
-  directory "/tmp/#{name}" do
-    action :nothing
-    recursive true
-    subscribes :delete, resources(:bash => "extract #{name}")
-  end
 end

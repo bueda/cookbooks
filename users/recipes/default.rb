@@ -50,17 +50,7 @@ groups.each do |group|
         group user[:groups].first.to_s
         variables(:keys => user[:ssh_keys])
         mode 0600
-        only_if do user[:ssh_keys] end
-      end
+      end if user[:ssh_keys]
     end
   end
-end
-
-# Remove initial setup user and group.
-user  "ubuntu" do
-  action :remove
-end
-
-group "ubuntu" do
-  action :remove
 end

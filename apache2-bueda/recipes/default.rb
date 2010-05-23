@@ -20,7 +20,7 @@ include_recipe 'apache2'
 include_recipe "apache2-bueda::mod_wsgi"
 
 # Disable default site
-apache_site "default" do
+apache_site "000-default" do
   action :disable
 end
 

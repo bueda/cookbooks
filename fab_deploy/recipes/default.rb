@@ -36,6 +36,9 @@ remote_file "/root/fab_shared.py" do
 end
 
 node[:fab_deploy].each do |name, config|
+  if not config[:tag]
+    config[:tag] = 'latest_tag'
+  end
   bash "fab #{name}" do
     action :nothing
     user config[:owner]

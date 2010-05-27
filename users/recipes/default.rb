@@ -19,6 +19,10 @@ groups.each do |group|
         shell user[:shell]
         action [:create, :manage]
       end
+
+      if user[:sudo]:
+        user[:groups] << 'admin'
+      end
       
       user[:groups].each do |g|
         group g do

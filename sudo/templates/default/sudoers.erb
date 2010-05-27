@@ -22,11 +22,11 @@ root    			ALL=(ALL) ALL
 <% end -%>
 
 <% @no_password_cmds.each do |cmd, perms| -%>
-<% perms.groups.each do |group| -%>
-# Members of the group '<%= group %>' may use <%= cmd -%>
-%<%= group %> ALL=(ALL) NOPASSWD:<%= cmd -%>
-<% end -%>
-<% perms.users.each do |group| -%>
-<%= user %> ALL=(ALL) NOPASSWD:<%= cmd -%>
-<% end -%>
+<% perms['groups'].each do |group| -%>
+# Members of the group '<%= group %>' may use <%= cmd %>
+%<%= group %> ALL=(ALL) NOPASSWD:<%= cmd %>
+<% end if perms['groups'] -%>
+<% perms['users'].each do |group| -%>
+<%= user %> ALL=(ALL) NOPASSWD:<%= cmd %>
+<% end if perms['users'] -%>
 <% end -%>

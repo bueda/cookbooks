@@ -1,0 +1,29 @@
+{
+    "conflicting": {
+    },
+    "license": "All rights reserved",
+    "providing": {
+    },
+    "platforms": {
+    },
+    "recipes": {
+    },
+    "replacing": {
+    },
+    "description": "Installs/Configures 4store",
+    "groupings": {
+    },
+    "attributes": {
+    },
+    "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES: \n\n= USAGE:\n\n",
+    "version": "0.1.0",
+    "recommendations": {
+    },
+    "dependencies": {
+    },
+    "maintainer": "Bueda Inc.",
+    "name": "4store",
+    "suggestions": {
+    },
+    "maintainer_email": "ops@bueda.com"
+  }

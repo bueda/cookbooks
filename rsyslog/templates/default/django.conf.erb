@@ -1,4 +1,4 @@
-local0.*            /var/log/django/django-api.log
-local1.*            /var/log/django/django-web.log
-local2.*            /var/log/apache2/error.log
-local3.*            /var/log/apache2/access.log
+local0.=info,local0.=debug             /var/log/django/info.log
+local0.!=info,local0.!=debug           /var/log/django/error.log
+local1.=error                          /var/log/apache2/error.log
+local1.!=error                         /var/log/apache2/access.log

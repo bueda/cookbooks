@@ -7,7 +7,7 @@
   <% end -%>
   
   LogLevel info
-  ErrorLog syslog:local2
+  ErrorLog syslog:local1
   <% if @params[:behind_load_balancer] -%>
   LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
   CustomLog |/usr/local/bin/apache2_syslog.pl combined-elb
@@ -21,6 +21,14 @@
 
   <% if @params[:media] %>
   Alias /site_media <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:media]}" %>
+  <Directory <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:media]}" %>>
+    Options FollowSymLinks
+    Options -Indexes
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+
   Alias /favicon.ico <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:media]}" %>/images/favicon.ico
   <Location "/favicon.ico">
     SetHandler None

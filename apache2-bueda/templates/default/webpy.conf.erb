@@ -7,7 +7,7 @@
   <% end -%>
   
   LogLevel info
-  ErrorLog syslog:local2
+  ErrorLog syslog:local1
   <% if @params[:behind_load_balancer] -%>
   LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
   CustomLog |/usr/local/bin/apache2_syslog.pl combined-elb

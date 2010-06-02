@@ -20,8 +20,8 @@
 include_recipe "rsyslog"
 
 directory node[:rsyslog][:log_dir] do
-  owner "root"
-  group "root"
+  owner "syslog"
+  group "adm"
   mode 0755
 end
 

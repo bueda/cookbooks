@@ -1,12 +1,3 @@
-local0.=info,local0.=debug             /var/log/django/info.log
-& ~
-local0.*                               /var/log/django/error.log
-& ~
-local1.=info,local0.=debug             /var/log/apache2/access.log
-& ~
-local1.*                         /var/log/apache2/error.log
-& ~
-
 auth,authpriv.*			/var/log/auth.log
 *.*;auth,authpriv.none		-/var/log/syslog
 cron.*				/var/log/cron.log

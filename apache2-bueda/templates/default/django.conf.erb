@@ -17,7 +17,7 @@
 
   RewriteEngine On
 
-  Alias /robots.txt <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}" %>/robots.txt
+  Alias /robots.txt <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:media]}" %>/robots.txt
 
   <% if @params[:media] %>
   Alias /site_media <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:media]}" %>

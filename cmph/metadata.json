@@ -1,0 +1,29 @@
+{
+    "conflicting": {
+    },
+    "license": "Apache v2.0",
+    "providing": {
+    },
+    "platforms": {
+    },
+    "recipes": {
+    },
+    "replacing": {
+    },
+    "description": "Install cmph",
+    "groupings": {
+    },
+    "attributes": {
+    },
+    "long_description": "",
+    "version": "0.1.0",
+    "recommendations": {
+    },
+    "dependencies": {
+    },
+    "maintainer": "Bueda",
+    "name": "cmph",
+    "suggestions": {
+    },
+    "maintainer_email": "ops@bueda.com"
+  }

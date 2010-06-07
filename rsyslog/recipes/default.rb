@@ -55,6 +55,7 @@ when "ubuntu"
     owner "root"
     group "root"
     mode 0644
+    notifies :restart, resources(:service => "rsyslog"), :delayed
   end
 end
 
@@ -65,5 +66,6 @@ node[:rsyslog][:conf].each do |conf|
     owner "root"
     group "root"
     mode 0644
+    notifies :restart, resources(:service => "rsyslog"), :delayed
   end
 end unless not node[:rsyslog] or not node[:rsyslog][:conf]

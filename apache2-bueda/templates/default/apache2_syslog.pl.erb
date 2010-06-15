@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use Sys::Syslog qw( :DEFAULT setlogsock );
+
+setlogsock('unix');
+openlog('<%= @tag %>', 'cons', 'pid', '<%= @facility %>');
+
+while ($log = <STDIN>) {
+    syslog('<%= @facility %>.<%= @level %>', $log);
+}
+closelog

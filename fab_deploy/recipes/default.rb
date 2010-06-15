@@ -18,13 +18,25 @@
 
 include_recipe "s3"
 
-easy_install_package "fabric"
-easy_install_package "pip"
+# double-checking if it should be installed, as the easy_install provider
+# is a bit buggy when it comes to version checking.
+easy_install_package "fabric" do
+  action :install
+  not_if do File.exists?("/usr/local/bin/fab") end
+end
+
+easy_install_package "pip" do
+  action :install
+  not_if do File.exists?("/usr/local/bin/fab") end
+end
 
 # easy_install_package checks for module.__path__ which virtualenv
 # doesn't provide. Could be considered a bug in either Chef or virtualenv,
 # but this works for now.
-execute "easy_install virtualenv"
+execute "easy_install virtualenv" do
+  action :run
+  not_if do File.exists?("/usr/local/bin/virtualenv") end
+end
 
 remote_file "/root/fab_shared.py" do
   source "s3://bueda.deploy/fab_shared.py"

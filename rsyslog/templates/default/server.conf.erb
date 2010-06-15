@@ -12,11 +12,14 @@ $UDPServerRun <%= @node[:rsyslog][:port] %>
 $template PerHostAuth,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/auth.log"
 $template PerHostCron,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/cron.log"
 $template PerHostSyslog,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/syslog"
-$template PerHostDjango,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django.log"
 $template PerHostApache,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/apache2.log"
+
+$template PerHostPerAppDjango,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django/%syslogtag%.log"
+$template PerHostPerAppWebpy,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/webpy/%syslogtag%.log"
 
 auth,authpriv.*         ?PerHostAuth
 *.*;auth,authpriv.none  -?PerHostSyslog
 cron.*                  ?PerHostCron
-local0.*                ?PerHostDjango
+local0.*                ?PerHostPerAppDjango
+local2.*                ?PerHostPerAppWebpy
 local1.*                ?PerHostApache

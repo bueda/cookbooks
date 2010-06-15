@@ -32,7 +32,3 @@ template "/etc/ssh/sshd_config" do
   group "root"
   notifies :restart, resources(:service => "ssh")
 end
-
-service "ssh" do
-  action :restart
-end

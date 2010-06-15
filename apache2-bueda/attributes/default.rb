@@ -19,3 +19,5 @@
 set_unless[:apache][:head_symlink] = "current"
 set_unless[:apache][:wsgi_user] = "www-data"
 set_unless[:apache][:wsgi_group] = "bueda"
+set_unless[:apache][:log_facility] = "local1"
+set_unless[:apache][:log_level] = "info"

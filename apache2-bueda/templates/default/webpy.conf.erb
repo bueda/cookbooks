@@ -6,16 +6,14 @@
   <% end -%>
   <% end -%>
   
-  LogLevel info
-  ErrorLog syslog:local1
+  LogLevel <%= @node[:apache][:log_level] %>
+  ErrorLog syslog:<%= @node[:apache][:log_facility] %>
   <% if @params[:behind_load_balancer] -%>
   LogFormat "\"%{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined-elb
-  CustomLog |/usr/local/bin/apache2_syslog.pl combined-elb
+  CustomLog |/usr/local/bin/apache2_syslog-<%= @params[:name] %>.pl combined-elb
   <% else -%>
-  CustomLog |/usr/local/bin/apache2_syslog.pl combined
+  CustomLog |/usr/local/bin/apache2_syslog-<%= @params[:name] %>.pl combined
   <% end -%>
-
-  RewriteEngine On
 
   WSGIScriptAlias / <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:wsgi_script]}" %>
   WSGIDaemonProcess <%= @params[:wsgi_name] %> user=<%= @node[:apache][:wsgi_user] %> group=<%= @node[:apache][:wsgi_group] %> processes=1 threads=10

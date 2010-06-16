@@ -30,5 +30,5 @@ template "/etc/ssh/sshd_config" do
   mode 0644
   owner "root"
   group "root"
-  notifies :restart, resources(:service => "ssh")
+  notifies :restart, resources(:service => "ssh"), :immediately
 end

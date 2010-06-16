@@ -62,8 +62,8 @@ when "ubuntu"
 end
 
 node[:rsyslog][:conf].each do |name, conf|
-  template "/etc/rsyslog.d/#{conf}.conf" do
-    source "#{conf}.conf.erb"
+  template "/etc/rsyslog.d/10-#{name}.conf" do
+    source "webapp.conf.erb"
     backup false
     owner "root"
     group "root"

@@ -17,9 +17,11 @@ $template PerHostApache,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/apac
 $template PerHostPerAppDjango,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/django/%syslogtag%.log"
 $template PerHostPerAppWebpy,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/%HOSTNAME%/webpy/%syslogtag%.log"
 
+local0.*                ?PerHostPerAppDjango
+local1.*                ?PerHostApache
+local2.*                ?PerHostPerAppWebpy
+local0,local1,local2,local3,local4.* ~
+
 auth,authpriv.*         ?PerHostAuth
 *.*;auth,authpriv.none  -?PerHostSyslog
 cron.*                  ?PerHostCron
-local0.*                ?PerHostPerAppDjango
-local2.*                ?PerHostPerAppWebpy
-local1.*                ?PerHostApache

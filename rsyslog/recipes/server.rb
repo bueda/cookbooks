@@ -25,8 +25,8 @@ directory node[:rsyslog][:log_dir] do
   mode 0755
 end
 
-template "/etc/rsyslog.d/server.conf" do
-  source "server.conf.erb"
+template "/etc/rsyslog.d/05-server.conf" do
+  source "05-server.conf.erb"
   backup false
   variables :log_dir => node[:rsyslog][:log_dir], :protocol => node[:rsyslog][:protocol]
   owner "root"

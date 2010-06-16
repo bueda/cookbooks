@@ -35,9 +35,9 @@ unless node[:rsyslog][:server]
     notifies :restart, resources(:service => "rsyslog"), :delayed
   end
 
-  file "/etc/rsyslog.d/server.conf" do
+  file "/etc/rsyslog.d/05-server.conf" do
     action :delete
     notifies :reload, resources(:service => "rsyslog"), :delayed
-    only_if do File.exists?("/etc/rsyslog.d/server.conf") end
+    only_if do File.exists?("/etc/rsyslog.d/05-server.conf") end
   end
 end

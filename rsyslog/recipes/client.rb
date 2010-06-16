@@ -26,7 +26,7 @@ unless node[:rsyslog][:server]
     source "05-remote.conf.erb"
     backup false
     variables(
-      :server => rsyslog_server['fqdn'],
+      :server => rsyslog_server['fqdn'] + ":" + node[:rsyslog][:port],
       :protocol => node[:rsyslog][:protocol]
     )
     owner "root"

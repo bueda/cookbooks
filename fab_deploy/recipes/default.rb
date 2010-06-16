@@ -27,7 +27,7 @@ end
 
 easy_install_package "pip" do
   action :install
-  not_if do File.exists?("/usr/local/bin/fab") end
+  not_if do File.exists?("/usr/local/bin/pip") end
 end
 
 # easy_install_package checks for module.__path__ which virtualenv

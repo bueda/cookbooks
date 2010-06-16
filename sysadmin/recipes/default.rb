@@ -1,3 +1,5 @@
+include_recipe "apt"
+
 package "vim-gnome"
 package "ack-grep"
 package "htop"

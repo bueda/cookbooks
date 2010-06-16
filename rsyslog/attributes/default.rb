@@ -20,4 +20,5 @@
 set_unless[:rsyslog][:log_dir] = "/srv/rsyslog"
 set_unless[:rsyslog][:server] = false
 set_unless[:rsyslog][:protocol] = "tcp"
-set_unless[:rsyslog][:port] = 514
+set_unless[:rsyslog][:port] = 1514
+set_unless[:rsyslog][:conf] = []

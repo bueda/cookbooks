@@ -61,13 +61,17 @@ when "ubuntu"
   end
 end
 
-node[:rsyslog][:conf].each do |conf|
+node[:rsyslog][:conf].each do |name, conf|
   template "/etc/rsyslog.d/#{conf}.conf" do
     source "#{conf}.conf.erb"
     backup false
     owner "root"
     group "root"
     mode 0644
+    variables(
+        :app => name,
+        :facility => conf[:facility]
+    )
     notifies :restart, resources(:service => "rsyslog"), :delayed
   end
 end

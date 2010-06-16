@@ -51,6 +51,7 @@ node[:fab_deploy].each do |name, config|
   if not config[:tag]
     config[:tag] = 'latest_tag'
   end
+
   bash "fab #{name}" do
     action :nothing
     user config[:owner]
@@ -77,5 +78,6 @@ node[:fab_deploy].each do |name, config|
     group config[:group]
     mode 0755
     notifies :run, resources(:bash => "extract #{name}"), :immediately
+    not_if do File.exists?("/tmp/#{name}.tar.gz") end
   end
 end

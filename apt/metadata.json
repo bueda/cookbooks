@@ -11,6 +11,7 @@
     },
     "description": "Update apt and upgrade all packages",
     "recipes": {
+      "apt": "Update apt only"
     },
     "attributes": {
     },

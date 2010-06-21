@@ -46,6 +46,6 @@
 
 
   WSGIScriptAlias / <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:wsgi_script]}" %>
-  WSGIDaemonProcess <%= @params[:wsgi_name] %> user=<%= @node[:apache][:wsgi_user] %> group=<%= @node[:apache][:wsgi_group] %> threads=25
+  WSGIDaemonProcess <%= @params[:wsgi_name] %> display-name=<%= @params[:wsgi_name] %> user=<%= @node[:apache][:wsgi_user] %> group=<%= @node[:apache][:wsgi_group] %> threads=25 inactivity-timeout=120
   WSGIProcessGroup <%= @params[:wsgi_name] %>
 </VirtualHost>

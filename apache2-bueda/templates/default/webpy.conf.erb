@@ -1,4 +1,8 @@
+<% if @params[:ssl] %>
+<VirtualHost *:<%= @params[:ssl][:port] %>>
+<% else %>
 <VirtualHost *:<%= @params[:port] %>>
+<% end %>
   ServerName <%= @params[:hostname] or @params[:name] %>
   <% if @params[:aliases] -%>
   <% @params[:aliases].each do |a| -%>
@@ -14,6 +18,13 @@
   <% else -%>
   CustomLog |/usr/local/bin/apache2_syslog-<%= @params[:name] %>.pl combined
   <% end -%>
+
+  <% if @params[:ssl] %>
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/<%= @params[:ssl][:certificate] %>
+  SSLCertificateKeyFile /etc/apache2/ssl/<%= @params[:ssl][:key] %>
+  SSLCertificateChainFile /etc/apache2/ssl/<%= @params[:ssl][:chain] %>
+  <% end %>
 
   WSGIScriptAlias / <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:wsgi_script]}" %>
   WSGIDaemonProcess <%= @params[:wsgi_name] %> display-name=<%= @params[:wsgi_name] %> user=<%= @node[:apache][:wsgi_user] %> group=<%= @node[:apache][:wsgi_group] %> threads=25

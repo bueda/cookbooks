@@ -18,6 +18,7 @@
 
 include_recipe 'apache2'
 include_recipe "apache2-bueda::mod_wsgi"
+include_recipe "apache2::mod_ssl"
 
 # Disable default site
 apache_site "000-default" do
@@ -25,11 +26,31 @@ apache_site "000-default" do
 end
 
 node[:apache][:web_apps].each do |name, config|
+  if config[:port]
+    # Unsecured version of the template - strip out SSL info in case
+    # this webapp has both secure and unsecure.
+    web_app name do
+      config.each do |k,v|
+        send(k.to_sym, v) unless k.eql? "ssl"
+      end
+    end
+  end
+  if config[:ssl]
+    # Secured version of the template
+    [:certificate, :key, :chain].each do |cert_file|
+      remote_file "/etc/apache2/ssl/#{config[:ssl][cert_file]}" do
+        source config[:ssl][cert_file]
+        mode 0644
+      end
+    end
+    name = name += "_ssl"
+    config[:wsgi_name] += "_ssl"
     web_app name do
       config.each do |k,v|
         send(k.to_sym, v)
       end
     end
+  end
   template "/usr/local/bin/apache2_syslog-#{name}.pl" do
     source "apache2_syslog.pl.erb"
     mode "0755"

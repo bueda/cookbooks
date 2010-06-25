@@ -34,6 +34,14 @@ node[:apache][:web_apps].each do |name, config|
         send(k.to_sym, v) unless k.eql? "ssl"
       end
     end
+    template "/usr/local/bin/apache2_syslog-#{name}.pl" do
+      source "apache2_syslog.pl.erb"
+      mode "0755"
+      variables :tag => name,
+          :facility => node[:apache][:log_facility],
+          :level => node[:apache][:log_level]
+      #notifies :restart, resources(:service => "apache2"), :delayed
+    end
   end
   if config[:ssl]
     # Secured version of the template
@@ -50,13 +58,13 @@ node[:apache][:web_apps].each do |name, config|
         send(k.to_sym, v)
       end
     end
-  end
-  template "/usr/local/bin/apache2_syslog-#{name}.pl" do
-    source "apache2_syslog.pl.erb"
-    mode "0755"
-    variables :tag => name,
-        :facility => node[:apache][:log_facility],
-        :level => node[:apache][:log_level]
-    notifies :restart, resources(:service => "apache2"), :delayed
+    template "/usr/local/bin/apache2_syslog-#{name}.pl" do
+      source "apache2_syslog.pl.erb"
+      mode "0755"
+      variables :tag => name,
+          :facility => node[:apache][:log_facility],
+          :level => node[:apache][:log_level]
+      #notifies :restart, resources(:service => "apache2"), :delayed
+    end
   end
 end if node[:apache] and node[:apache][:web_apps]

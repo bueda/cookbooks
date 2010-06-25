@@ -57,6 +57,6 @@ node[:apache][:web_apps].each do |name, config|
     variables :tag => name,
         :facility => node[:apache][:log_facility],
         :level => node[:apache][:log_level]
-    notifies :restart, resources(:service => "apache2")
+    notifies :restart, resources(:service => "apache2"), :delayed
   end
 end if node[:apache] and node[:apache][:web_apps]

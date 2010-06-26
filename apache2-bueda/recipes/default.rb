@@ -51,6 +51,7 @@ node[:apache][:web_apps].each do |name, config|
         mode 0644
       end
     end
+    config[:hostname] = name
     name = name += "_ssl"
     config[:wsgi_name] += "_ssl"
     web_app name do

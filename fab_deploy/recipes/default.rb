@@ -80,4 +80,4 @@ node[:fab_deploy].each do |name, config|
     notifies :run, resources(:bash => "extract #{name}"), :immediately
     not_if do File.exists?("/tmp/#{name}.tar.gz") end
   end
-end
+end if node[:fab_deploy]

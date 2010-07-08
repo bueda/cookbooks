@@ -1,0 +1,6 @@
+default.cijoe[:user] = "peplin"
+default.cijoe[:group] = "bueda"
+default.cijoe[:port] = "4567"
+default.cijoe[:build_root] = "/var/unicorn/builds"
+default.cijoe[:git_url_prefix] = "git@github.com"
+default.cijoe[:runner] = "env/bin/python ./manage.py test"

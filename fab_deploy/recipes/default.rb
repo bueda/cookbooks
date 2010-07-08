@@ -38,7 +38,7 @@ execute "easy_install virtualenv" do
   not_if do File.exists?("/usr/local/bin/virtualenv") end
 end
 
-remote_file "/root/fab_shared.py" do
+s3_file "/root/fab_shared.py" do
   source "s3://bueda.deploy/fab_shared.py"
   access_key_id data_bag_item(:aws, :primary)['access_key_id']
   secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
@@ -70,7 +70,7 @@ node[:fab_deploy].each do |name, config|
     notifies :run, resources(:bash => "fab #{name}"), :delayed
   end
 
-  remote_file "/tmp/#{name}.tar.gz" do
+  s3_file "/tmp/#{name}.tar.gz" do
     source config[:source]
     access_key_id data_bag_item(:aws, :primary)['access_key_id']
     secret_access_key data_bag_item(:aws, :primary)['secret_access_key']

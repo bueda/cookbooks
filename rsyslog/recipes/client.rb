@@ -19,7 +19,7 @@
 
 include_recipe "rsyslog"
 
-rsyslog_server = search(:node, "rsyslog_server:true", nil, 0, 1)[0][0]
+rsyslog_server = search(:node, "default_attributes_rsyslog_server:true", nil, 0, 1)[0][0]
 
 unless node[:rsyslog][:server] 
   template "/etc/rsyslog.d/05-remote.conf" do

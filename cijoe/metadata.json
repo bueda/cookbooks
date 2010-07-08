@@ -1,46 +1,32 @@
 {
-  "groupings": {
+    "conflicting": {
+    },
+    "license": "Apache v2.0",
+    "providing": {
+    },
+    "platforms": {
+    },
+    "recipes": {
+    },
+    "replacing": {
+    },
+    "description": "Configures cijoe",
+    "groupings": {
+    },
+    "attributes": {
+    },
+    "long_description": "",
+    "version": "0.1.0",
+    "recommendations": {
+    },
+    "dependencies": {
+      "unicorn": [
 
-  },
-  "recommendations": {
-
-  },
-  "platforms": {
-
-  },
-  "license": "Apache v2.0",
-  "maintainer": "37signals",
-  "suggestions": {
-
-  },
-  "maintainer_email": "sysadmins@37signals.com",
-  "version": "0.1.0",
-  "conflicting": {
-
-  },
-  "description": "Configures cijoe",
-  "providing": {
-    "cijoe": [
-
-    ]
-  },
-  "name": "cijoe",
-  "attributes": {
-
-  },
-  "long_description": "",
-  "recipes": {
-    "cijoe": ""
-  },
-  "replacing": {
-
-  },
-  "dependencies": {
-    "git::server": [
-
-    ],
-    "unicorn": [
-
-    ]
+      ]
+    },
+    "maintainer": "37signals",
+    "name": "cijoe",
+    "suggestions": {
+    },
+    "maintainer_email": "sysadmins@37signals.com"
   }
-}

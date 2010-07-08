@@ -5,12 +5,13 @@ gem_package "cijoe"
 
 directory "/etc/cijoe" do
   owner node[:cijoe][:user]
-  owner node[:cijoe][:group]
+  group node[:cijoe][:group]
 end
 
 directory node[:cijoe][:build_root] do
   owner node[:cijoe][:user]
-  owner node[:cijoe][:group]
+  group node[:cijoe][:group]
+  recursive true
 end
 
 repos = []
@@ -25,7 +26,7 @@ node[:git][:repos].each do |name, conf|
 
     execute "cijoe initial build repo checkout for #{full_name}" do
       user node[:cijoe][:user]
-      command "git clone #{node[:cijoe][:git_url_prefix]}:#{name}.git #{full_path}"
+      command "echo \"yes\" | git clone #{node[:cijoe][:git_url_prefix]}:#{name}.git #{full_path}"
       not_if { File.directory?(full_path) }
     end
 

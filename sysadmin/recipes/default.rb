@@ -7,6 +7,7 @@ package "rake"
 
 gem_package "chef" do
   version node[:chef][:client_version]
+  notifies :restart, resources(:service => "chef-client"), :delayed
 end
 
 bash "switch sh to bash" do

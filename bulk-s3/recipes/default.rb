@@ -8,7 +8,7 @@ node[:s3][:files].each do |name, config|
     recursive true
   end
 
-  remote_file name do
+  s3_file name do
     source "s3://#{config[:bucket]}/#{config[:file]}"
     access_key_id data_bag_item(:aws, :primary)['access_key_id']
     secret_access_key data_bag_item(:aws, :primary)['secret_access_key']

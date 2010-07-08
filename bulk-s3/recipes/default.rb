@@ -23,6 +23,6 @@ node[:s3][:files].each do |name, config|
     user config[:owner]
     cwd File.dirname(name)
     code "#{config[:extract_command]} #{File.basename(name)}"
-    subscribes :run, resources(:remote_file => name), :immediately
+    subscribes :run, resources(:s3_file => name), :immediately
   end if config[:extract_command]
 end

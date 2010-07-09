@@ -16,17 +16,46 @@ end
 
 repos = []
 
-node[:git][:repos].each do |name, conf|
-  next unless conf[:ci]
-  conf[:ci].each do |branch|
+search(:repos, "*:*") do |repo|
+  next unless repo[:ci]
+  name = repo[:user] + "/" + repo[:id]
+  repo[:ci].each do |branch|
     
     full_name = "#{name}-#{branch}"
     full_path = "#{node[:cijoe][:build_root]}/#{full_name}"
     repos << {:full_name => full_name, :full_path => full_path}
 
-    execute "cijoe initial build repo checkout for #{full_name}" do
+    cookbook_file "/usr/local/bin/unsafe-ssh" do
+      source "unsafe-ssh"
+      mode "0755"
+    end
+
+    template "/#{node[:cijoe][:build_root]}/#{repo[:id]}.id_rsa" do
+      source "id_rsa.erb"
+      variables :key => repo[:key][:private]
+      owner node[:cijoe][:user]
+      mode 0600
+    end
+
+    execute "start ssh-agent" do
       user node[:cijoe][:user]
-      command "echo \"yes\" | git clone #{node[:cijoe][:git_url_prefix]}:#{name}.git #{full_path}"
+      command "ssh-agent -a /tmp/agent.pid &"
+    end
+
+    execute "add ssh key for #{full_name} to ssh agent" do 
+      user node[:cijoe][:user]
+      cwd node[:cijoe][:build_root]
+      environment "SSH_AUTH_SOCK" => "/tmp/agent.pid"
+      command "ssh-add #{repo[:id]}.id_rsa"
+      not_if "SSH_AUTH_SOCK=/tmp/agent.pid ssh-add -l | grep #{repo[:id]}.id_rsa"
+    end
+
+    git full_path do
+      user node[:cijoe][:user]
+      repository "#{node[:cijoe][:git_url_prefix]}:#{name}.git"
+      reference "HEAD"
+      action :sync
+      ssh_wrapper "/usr/local/bin/unsafe-ssh"
       not_if { File.directory?(full_path) }
     end
 

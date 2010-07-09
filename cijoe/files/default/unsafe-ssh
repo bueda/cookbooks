@@ -1,0 +1,3 @@
+#!/bin/bash
+export SSH_AUTH_SOCK=/tmp/agent.pid
+/usr/bin/ssh -o "StrictHostKeyChecking no" $1 $2

@@ -1,32 +1,32 @@
 {
-    "conflicting": {
+    "suggestions": {
     },
     "license": "Apache v2.0",
-    "providing": {
+    "maintainer_email": "sysadmins@37signals.com",
+    "conflicting": {
     },
     "platforms": {
     },
-    "recipes": {
+    "providing": {
+    },
+    "description": "Configures cijoe",
+    "attributes": {
     },
     "replacing": {
     },
-    "description": "Configures cijoe",
-    "groupings": {
-    },
-    "attributes": {
-    },
-    "long_description": "",
     "version": "0.1.0",
-    "recommendations": {
+    "recipes": {
     },
     "dependencies": {
       "unicorn": [
 
       ]
     },
-    "maintainer": "37signals",
-    "name": "cijoe",
-    "suggestions": {
+    "groupings": {
     },
-    "maintainer_email": "sysadmins@37signals.com"
+    "long_description": "",
+    "name": "cijoe",
+    "recommendations": {
+    },
+    "maintainer": "37signals"
   }

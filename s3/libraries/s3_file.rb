@@ -34,6 +34,7 @@ class Chef
         if current_resource_matches_target_checksum?
           Chef::Log.debug("File #{@new_resource} checksum matches target checksum (#{@new_resource.checksum}), not updating")
         else
+          Chef::Log.debug("File #{@current_resource} checksum didn't match target checksum (#{@new_resource.checksum}), updating")
           fetch_from_s3(@new_resource.source) do |raw_file|
             if matches_current_checksum?(raw_file)
               Chef::Log.debug "#{@new_resource}: Target and Source checksums are the same, taking no action"

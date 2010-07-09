@@ -37,6 +37,15 @@ search(:repos, "*:*") do |repo|
       mode 0600
     end
 
+    repo[:submodules].each do |submodule, conf|
+      template "/#{node[:cijoe][:build_root]}/#{submodule}.id_rsa" do
+        source "id_rsa.erb"
+        variables :key => conf[:key][:private]
+        owner node[:cijoe][:user]
+        mode 0600
+      end
+    end
+
     execute "start ssh-agent" do
       user node[:cijoe][:user]
       command "ssh-agent -a /tmp/agent.pid &"
@@ -66,8 +75,9 @@ search(:repos, "*:*") do |repo|
       not_if "grep 'branch = #{branch}' #{full_path}/.git/config"
     end
 
-    cookbook_file "#{full_path}/.git/hooks/after-reset" do
-      source "after-reset"
+    template "#{full_path}/.git/hooks/after-reset" do
+      source "after-reset.erb"
+      variables :submodules => repo[:submodules]
       mode "0755"
     end
 

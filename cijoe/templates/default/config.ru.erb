@@ -7,6 +7,8 @@ use Rack::CommonLogger
 <% klass = repo[:full_name].gsub("-", "_").gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase } %>
 class <%= klass %> < CIJoe::Server; end
 
+$project_path = "<%= repo[:full_path] %>"
+
 map "/<%= repo[:full_name] %>" do
   <%= klass %>.configure do |config|
     config.set :project_path, "<%= repo[:full_path] %>"

@@ -21,7 +21,7 @@ search(:repos, "*:*") do |repo|
   name = repo[:user] + "/" + repo[:id]
   repo[:ci].each do |branch|
     
-    full_name = "#{name}-#{branch}"
+    full_name = "#{repo[:id]}-#{branch}"
     full_path = "#{node[:cijoe][:build_root]}/#{full_name}"
     repos << {:full_name => full_name, :full_path => full_path}
 
@@ -62,7 +62,7 @@ search(:repos, "*:*") do |repo|
     execute "cijoe set active branch for #{full_name}" do
       user node[:cijoe][:user]
       cwd full_path
-      command "git config --add cijoe.branch #{branch}"
+      command "git config --replace-all cijoe.branch #{branch}"
       not_if "grep 'branch = #{branch}' #{full_path}/.git/config"
     end
 
@@ -74,19 +74,18 @@ search(:repos, "*:*") do |repo|
     execute "cijoe setup campfire for #{full_name}" do
       user node[:cijoe][:user]
       cwd full_path
-      command "git config --add campfire.user #{node[:ci][:campfire_token]} &&
-               git config --add campfire.pass x &&
-               git config --add campfire.subdomain #{node[:ci][:campfire_subdomain]} &&
-               git config --add campfire.room #{node[:ci][:campfire_room]} &&
-               git config --add campfire.ssl true"
-      not_if "grep campfire #{node[:ci][:campfire_room]}/.git/config"
+      command "git config --replace-all campfire.user #{node[:ci][:campfire_token]} &&
+               git config --replace-all campfire.pass x &&
+               git config --replace-all campfire.subdomain #{node[:ci][:campfire_subdomain]} &&
+               git config --replace-all campfire.room #{node[:ci][:campfire_room]} &&
+               git config --replace-all campfire.ssl true"
     end
 
     execute "cijoe setup test runner for #{full_name}" do
       cmd = node[:cijoe][:runner]
       user node[:cijoe][:user]
       cwd full_path
-      command "git config --add cijoe.runner \"#{cmd}\""
+      command "git config --replace-all cijoe.runner \"#{cmd}\""
       not_if "grep '#{cmd}' #{full_path}/.git/config"
     end
   end
@@ -96,6 +95,16 @@ template "/etc/cijoe/config.ru" do
   variables :repos => repos
   mode 0644
 end
+
 template "/etc/cijoe/unicorn.conf.rb" do
   source "unicorn.conf.erb"
+  mode 0644
+end
+
+bluepill_monitor "cijoe" do
+  cookbook "cijoe"
+  source "bluepill.conf.erb"
+  user node[:cijoe][:user]
+  group node[:cijoe][:group]
+  memory_limit 250 # megabytes
 end

@@ -19,12 +19,6 @@
 
 include_recipe "rsyslog"
 
-directory node[:rsyslog][:log_dir] do
-  owner "syslog"
-  group "adm"
-  mode 0755
-end
-
 template "/etc/rsyslog.d/05-server.conf" do
   source "05-server.conf.erb"
   backup false

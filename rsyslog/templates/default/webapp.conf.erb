@@ -1,4 +1,4 @@
-$template PerApp<%= @app %>,"/var/log/<%= @app %>/%syslogtag%.log"
+$template PerApp<%= @app %>,"<%= @log_dir %>/<%= @app %>/%syslogtag%.log"
 
 <%= @facility %>.*        ?PerApp<%= @app %>
 <%= @facility %>.* ~

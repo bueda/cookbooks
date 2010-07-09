@@ -26,7 +26,7 @@ service "rsyslog" do
   action [:enable, :start]
 end
 
-remote_file "/etc/default/rsyslog" do
+cookbook_file "/etc/default/rsyslog" do
   source "rsyslog.default"
   owner "root"
   group "root"
@@ -47,18 +47,19 @@ template "/etc/rsyslog.conf" do
   notifies :restart, resources(:service => "rsyslog"), :delayed
 end
 
-case node[:platform]
-when "ubuntu"
-  if node[:platform_version] >= "9.10"
-    template "/etc/rsyslog.d/50-default.conf" do
-      source "50-default.conf.erb"
-      backup false
-      owner "root"
-      group "root"
-      mode 0644
-      notifies :restart, resources(:service => "rsyslog"), :delayed
-    end
-  end
+directory node[:rsyslog][:log_dir] do
+  owner "syslog"
+  group "adm"
+  mode 0755
+end
+
+template "/etc/rsyslog.d/50-default.conf" do
+  source "50-default.conf.erb"
+  backup false
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, resources(:service => "rsyslog"), :delayed
 end
 
 node[:rsyslog][:conf].each do |name, conf|
@@ -70,7 +71,8 @@ node[:rsyslog][:conf].each do |name, conf|
     mode 0644
     variables(
         :app => name,
-        :facility => conf[:facility]
+        :facility => conf[:facility],
+        :log_dir => node[:rsyslog][:log_dir]
     )
     notifies :restart, resources(:service => "rsyslog"), :delayed
   end

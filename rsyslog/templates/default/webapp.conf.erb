@@ -1,3 +1,4 @@
-<%= @facility %>.*;<%= @facility %>.!warn        /var/log/<%= @app %>/info.log
-<%= @facility %>.warn;        /var/log/<%= @app %>/error.log
+$template PerApp<%= @app %>,"/var/log/<%= @app %>/%syslogtag%.log"
+
+<%= @facility %>.*        ?PerApp<%= @app %>
 <%= @facility %>.* ~

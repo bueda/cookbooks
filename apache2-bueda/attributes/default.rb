@@ -16,8 +16,8 @@
 # See the License for the specific language governing permissions and # limitations under the License.
 #
 
-set_unless[:apache][:head_symlink] = "current"
-set_unless[:apache][:wsgi_user] = "www-data"
-set_unless[:apache][:wsgi_group] = "bueda"
-set_unless[:apache][:log_facility] = "local1"
-set_unless[:apache][:log_level] = "info"
+default[:apache][:head_symlink] = "current"
+default[:apache][:wsgi_user] = "www-data"
+default[:apache][:wsgi_group] = "bueda"
+default[:apache][:log_facility] = "local1"
+default[:apache][:log_level] = "info"

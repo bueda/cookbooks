@@ -12,13 +12,13 @@ $UDPServerRun <%= @node[:rsyslog][:port] %>
 $template PerDateAuth,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/auth.log"
 $template PerDateCron,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/cron.log"
 $template PerDateSyslog,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/syslog"
-$template PerDateApache,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/apache2.log"
 
+$template PerDatePerAppApache,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/apache2/%syslogtag%.log"
 $template PerDatePerAppDjango,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/django/%syslogtag%.log"
 $template PerDatePerAppWebpy,"<%= @log_dir %>/%$YEAR%/%$MONTH%/%$DAY%/webpy/%syslogtag%.log"
 
 local0.*                ?PerDatePerAppDjango
-local1.*                ?PerDateApache
+local1.*                ?PerDatePerAppApache
 local2.*                ?PerDatePerAppWebpy
 local0,local1,local2,local3,local4.* ~
 

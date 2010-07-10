@@ -47,6 +47,15 @@ s3_file "/root/fab_shared.py" do
   mode 0755
 end
 
+s3_file "/root/git-archive-all.sh" do
+  source "s3://bueda.deploy/git-archive-all.sh"
+  access_key_id data_bag_item(:aws, :primary)['access_key_id']
+  secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
+  owner "root"
+  group "root"
+  mode 0755
+end
+
 node[:fab_deploy].each do |name, config|
   if not config[:tag]
     config[:tag] = 'latest_tag'
@@ -68,6 +77,7 @@ node[:fab_deploy].each do |name, config|
     cwd "/tmp"
     code "mkdir -p #{name}; cd #{name}; tar -xzf /tmp/#{name}.tar.gz"
     notifies :run, resources(:bash => "fab #{name}"), :delayed
+    not_if do File.exists?("/tmp/#{name}") end
   end
 
   s3_file "/tmp/#{name}.tar.gz" do

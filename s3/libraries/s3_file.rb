@@ -1,6 +1,6 @@
 #
 # Author:: Christopher Peplin (<peplin@bueda.com>)
-# Copyright:: Copyright (c) 2010 Opscode, Inc.
+# Copyright:: Copyright (c) 2010 Bueda, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-#
-# TODO this code is duplicated in fab_deploy and bulk-s3
 
 class Chef
   class Provider

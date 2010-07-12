@@ -12,11 +12,11 @@ package "zlib1g-dev"
 deb_file = "/tmp/irstlm.deb"
 
 if node[:kernel][:machine].eql?("x86_64")
-  remote_file deb_file do
+  cookbook_file deb_file do
     source "irstlm_5.30-1_amd64.deb"
   end
 else
-  remote_file deb_file do
+  cookbook_file deb_file do
     source "irstlm_5.30-1_i386.deb"
   end
 end

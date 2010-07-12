@@ -20,7 +20,7 @@ service "ssh" do
   action [ :enable, :start ]
 end
 
-remote_file "/etc/ssh/known_hosts" do
+cookbook_file "/etc/ssh/known_hosts" do
   source "known_hosts"
   mode 0644
 end

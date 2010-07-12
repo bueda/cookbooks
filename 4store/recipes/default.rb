@@ -19,11 +19,11 @@ end
 deb_file = "/tmp/4store-1.0.3.deb"
 
 if node[:kernel][:machine].eql?("x86_64")
-  remote_file deb_file do
+  cookbook_file deb_file do
     source "4store-b094788_amd64.deb"
   end
 else
-  remote_file deb_file do
+  cookbook_file deb_file do
     source "4store-b094788_i386.deb"
   end
 end

@@ -46,7 +46,7 @@ node[:apache][:web_apps].each do |name, config|
   if config[:ssl]
     # Secured version of the template
     [:certificate, :key, :chain].each do |cert_file|
-      remote_file "/etc/apache2/ssl/#{config[:ssl][cert_file]}" do
+      cookbook_file "/etc/apache2/ssl/#{config[:ssl][cert_file]}" do
         source config[:ssl][cert_file]
         mode 0644
       end

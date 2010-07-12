@@ -11,7 +11,7 @@ bash "switch sh to bash" do
 end
 
 node[:sysadmin][:files].each do |file|
-  remote_file "/usr/local/bin/#{file}" do
+  cookbook_file "/usr/local/bin/#{file}" do
     source "sysadmin/#{file}"
     mode 0755
   end

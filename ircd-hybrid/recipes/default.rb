@@ -5,7 +5,7 @@ service "ircd-hybrid" do
   action [ :enable, :start ]
 end
 
-remote_file "/etc/ircd-hybrid/ircd.motd" do
+cookbook_file "/etc/ircd-hybrid/ircd.motd" do
   source "ircd.motd"
   mode 0644
 end

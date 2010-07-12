@@ -13,7 +13,7 @@ directory "/var/log/solr" do
 end
 
 #TODO register this as a service
-remote_file "/etc/init.d/jetty" do
+cookbook_file "/etc/init.d/jetty" do
   source "jetty.sh"
   owner "root"
   group "root"
@@ -49,7 +49,7 @@ end
 
 execute "chown -R solr:bueda /mnt/solr"
 
-remote_file "#{node[:solr][:home]}/etc/jetty-logging.xml" do
+cookbook_file "#{node[:solr][:home]}/etc/jetty-logging.xml" do
   source "jetty-logging.xml"
   owner "solr"
   group "bueda"
@@ -57,7 +57,7 @@ remote_file "#{node[:solr][:home]}/etc/jetty-logging.xml" do
 end
 
 #TODO how will we change this for different data sources?
-remote_file "#{node[:solr][:home]}/solr/conf/schema.xml" do
+cookbook_file "#{node[:solr][:home]}/solr/conf/schema.xml" do
   source node[:solr][:schema]
   owner "solr"
   group "bueda"

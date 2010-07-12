@@ -1,5 +1,14 @@
+<% if @params[:ssl] %>
+<VirtualHost *:<%= @params[:ssl][:port] %>>
+<% else %>
 <VirtualHost *:<%= @params[:port] %>>
+<% end %>
   ServerName <%= @params[:hostname] or @params[:name] %>
+  <% if @params[:aliases] -%>
+  <% @params[:aliases].each do |a| -%>
+  ServerAlias <%= a %>
+  <% end -%>
+  <% end -%>
   <% if @params[:docroot] %>
   DocumentRoot <%= "#{@params[:parent_dir]}/#{@node[:apache][:head_symlink]}/#{@params[:docroot]}" %>
   <% end %>
@@ -34,5 +43,12 @@
     Order allow,deny
     Allow from all
   </Directory>
+
+  <% if @params[:ssl] %>
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/<%= @params[:ssl][:certificate] %>
+  SSLCertificateKeyFile /etc/apache2/ssl/<%= @params[:ssl][:key] %>
+  SSLCertificateChainFile /etc/apache2/ssl/<%= @params[:ssl][:chain] %>
+  <% end %>
 
 </VirtualHost>

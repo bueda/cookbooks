@@ -53,7 +53,9 @@ node[:apache][:web_apps].each do |name, config|
     end
     config[:hostname] = name
     name = name += "_ssl"
-    config[:wsgi_name] += "_ssl"
+    if config[:wsgi_name]
+      config[:wsgi_name] += "_ssl"
+    end
     web_app name do
       config.each do |k,v|
         send(k.to_sym, v)

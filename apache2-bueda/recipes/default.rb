@@ -20,9 +20,8 @@ include_recipe 'apache2'
 include_recipe "apache2-bueda::mod_wsgi"
 include_recipe "apache2::mod_ssl"
 
-# Disable default site
 apache_site "000-default" do
-  action :disable
+  enable false
 end
 
 node[:apache][:web_apps].each do |name, config|

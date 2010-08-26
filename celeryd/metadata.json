@@ -1,16 +1,16 @@
 {
     "replacing": {
     },
-    "license": "Apache v2.0",
-    "maintainer_email": "sysadmins@37signals.com",
+    "license": "All rights reserved",
+    "maintainer_email": "ops@bueda.com",
     "groupings": {
     },
     "recommendations": {
     },
     "platforms": {
     },
-    "long_description": "",
-    "description": "Configures unicorn",
+    "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES: \n\n= USAGE:\n\n",
+    "description": "Installs/Configures celeryd",
     "suggestions": {
     },
     "attributes": {
@@ -19,20 +19,11 @@
     "conflicting": {
     },
     "dependencies": {
-      "runit": [
-
-      ],
-      "apache2": [
-
-      ],
-      "ruby": [
-
-      ]
     },
     "recipes": {
     },
-    "name": "unicorn",
+    "name": "celeryd",
     "providing": {
     },
-    "maintainer": "unicorn"
+    "maintainer": "Bueda Inc."
   }

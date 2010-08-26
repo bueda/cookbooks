@@ -10,7 +10,7 @@
 require_recipe "god"
 
 search(:repos, "*:*") do |app|
-    god_monitor app.id do
+    god_monitor app[:id] do
         config "celeryd.god.erb"
     end
 end

@@ -37,7 +37,7 @@ end
 directory app['deploy_to'] do
   owner app['owner']
   group app['group']
-  mode '0775'
+  mode '0755'
   recursive true
 end
 

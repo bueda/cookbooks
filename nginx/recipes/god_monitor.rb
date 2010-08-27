@@ -1,7 +1,6 @@
 #
-# Author:: Christopher Peplin <peplin@bueda.com>
-# Cookbook Name:: gunicorn
-# Recipe:: default
+# Cookbook Name:: nginx
+# Recipe:: god_monitor
 #
 # Copyright 2010, Bueda, Inc.
 #
@@ -18,11 +17,17 @@
 # limitations under the License.
 #
 
-include_recipe "python"
+nginx_service = service "nginx" do
+  action :nothing
+end
 
-package "python-dev"
-package "libevent-dev"
+start_command = nginx_service.start_command
+stop_command = nginx_service.stop_command
+restart_command = nginx_service.restart_command
 
-directory "/var/run/gunicorn" do
-  mode '0777'
+god_monitor "nginx" do
+  config "nginx.god.erb"
+  start (start_command)?start_command : "/etc/init.d/#{nginx_service.service_name} start"
+  restart (restart_command)?restart_command : "/etc/init.d/#{nginx_service.service_name} restart"
+  stop (stop_command)?stop_command : "/etc/init.d/#{nginx_service.service_name} stop"
 end

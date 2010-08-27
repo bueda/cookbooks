@@ -1,9 +1,7 @@
 #
-# Author:: Christopher Peplin <peplin@bueda.com>
-# Cookbook Name:: gunicorn
-# Recipe:: default
-#
-# Copyright 2010, Bueda, Inc.
+# Author:: Christopher Peplin (<peplin@bueda.com>)
+# Copyright:: Copyright (c) 2010 Christopher Peplin
+# License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,11 +16,3 @@
 # limitations under the License.
 #
 
-include_recipe "python"
-
-package "python-dev"
-package "libevent-dev"
-
-directory "/var/run/gunicorn" do
-  mode '0777'
-end

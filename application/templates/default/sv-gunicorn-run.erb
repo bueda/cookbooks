@@ -1,12 +1,13 @@
 #!/bin/bash
 
-export GUNICORN_BINARY="gunicorn_django"
-<%- if @options[:app]['virtualenv'] %>
-export GUNICORN_BINARY="<%= @options[:app]'virtualenv'] %>/bin/gunicorn_django"
+<%- if @options[:app][:virtualenv] %>
+PYTHON_BINARY="<%= @options[:app][:virtualenv] %>/bin/python"
+<% else %>
+PYTHON_BINARY="python"
 <% end %>
 
-export DJANGO_ENV="<%= node[:app_environment] %> "
+export DEPLOYMENT_TYPE="<%= node[:app_environment] %>"
 
-cd <%= @options[:app]['deploy_to'] %>/current
+cd <%= @options[:app][:deploy_to] %>/current
 exec 2>&1
-exec chpst -u <%= @options[:app]["owner"] %>:<%= @options[:app]["group"] %> gunicorn -c /etc/gunicorn/<%= @options[:app]['id'] %>.py
+exec chpst -u <%= @options[:app][:owner] %>:<%= @options[:app][:group] %> $PYTHON_BINARY /usr/local/bin/<%= @options[:gunicorn_binary] %> -c /etc/gunicorn/<%= @options[:app][:id] %>.py

@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-include_recipe "python"
+include_recipe "gunicorn"
 
-package "python-dev"
-package "libevent-dev"
-
-directory "/var/run/gunicorn" do
-  mode '0777'
-end
+pip_package "greenlet"
+pip_package "gevent"
+pip_package "gunicorn"

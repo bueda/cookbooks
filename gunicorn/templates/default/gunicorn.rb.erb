@@ -4,76 +4,80 @@
 ##
 
 # What address:port to bind
-bind = "<%= address %>:<%= port %>"
+bind = "<%= @bind %>"
 
 backlog = <%= @connection_backlog %>
 
 # How many worker processes
 workers = <%= @worker_processes %>
 
-worker_class = <% @worker_class %>
+worker_class = "<%= @worker_class %>"
 
-worker_connections = <% @max_worker_connections %>
+worker_connections = <%= @max_worker_connections %>
 
 # What the timeout for killing busy workers is, in seconds
 timeout = <%= @timeout %>
 
 keepalive = <%= @keepalive %>
 
-proc_name = <%= @name %>
+proc_name = "<%= @name %>"
 
 <%- if @preload_app %>
 preload_app = True
-<%- end %>
 
+<%- end %>
 <%- if @daemon %>
 daemon = True
-<%- end %>
 
+<%- end %>
 <%- if @debug %>
 debug = True
-<%- end %>
 
+<%- end %>
 <%- if @run_user %>
 user = "<%= @run_user %>"
-<%- end %>
 
+<%- end %>
 <%- if @run_group %>
 group = "<%= @run_group %>"
-<%- end %>
 
+<%- end %>
 umask = "<%= @umask %>"
 
 <%- if @pid %>
 pidfile = "<%= @pid %>"
-<%- end %>
 
+<%- end %>
 <%- if @logfile %>
 logfile = "<%= @logfile %>"
-<%- end %>
 
+<%- end %>
 <%- if @loglevel %>
 loglevel = "<%= @loglevel %>"
-<%- end %>
 
+<%- end %>
 <%- if @pre_fork %>
 # What to do before we fork a worker
 def def_pre_fork(server, worker):
     <%= @pre_fork %>
-<%- end %>
 
+<%- end %>
 <%- if @post_fork %>
 # What to do after we fork a worker
 def def_post_fork(server, worker):
     <%= @post_fork %>
-<%- end %>
 
+<%- end %>
 <%- if @when_ready %>
 def def_start_server(server):
     <%= @when_ready %>
-<%- end %>
 
+<%- end %>
 <%- if @pre_exec %>
 def def_pre_exec(server):
     <%= @pre_exec %>
+
 <%- end %>
+
+import os
+os.environ['DEPLOYMENT_TYPE'] = "<%= node[:app_environment] %>"

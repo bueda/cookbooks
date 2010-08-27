@@ -18,11 +18,12 @@
 # limitations under the License.
 #
 
-include_recipe "python"
+include_recipe "gunicorn"
 
-package "python-dev"
-package "libevent-dev"
+app = node.run_state[:current_app] 
 
-directory "/var/run/gunicorn" do
-  mode '0777'
+%w{greenlet gevent gunicorn}.each do |package|
+  pip_package package do
+    virtualenv app[:virtualenv]
+  end
 end

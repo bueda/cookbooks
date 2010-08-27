@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export GUNICORN_BINARY="gunicorn_django"
+<%- if @options[:app]['virtualenv'] %>
+export GUNICORN_BINARY="<%= @options[:app]'virtualenv'] %>/bin/gunicorn_django"
+<% end %>
+
+export DJANGO_ENV="<%= node[:app_environment] %> "
+
+cd <%= @options[:app]['deploy_to'] %>/current
+exec 2>&1
+exec chpst -u <%= @options[:app]["owner"] %>:<%= @options[:app]["group"] %> gunicorn -c /etc/gunicorn/<%= @options[:app]['id'] %>.py

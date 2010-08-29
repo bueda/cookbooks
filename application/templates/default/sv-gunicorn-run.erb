@@ -10,4 +10,4 @@ export DEPLOYMENT_TYPE="<%= node[:app_environment] %>"
 
 cd <%= @options[:app][:deploy_to] %>/current
 exec 2>&1
-exec chpst -u <%= @options[:app][:owner] %>:<%= @options[:app][:group] %> $PYTHON_BINARY /usr/local/bin/<%= @options[:gunicorn_binary] %> -c /etc/gunicorn/<%= @options[:app][:id] %>.py
+exec chpst -u <%= @options[:app][:owner] %>:<%= @options[:app][:group] %> $PYTHON_BINARY /usr/local/bin/<%= @options[:gunicorn_binary] %> -c /etc/gunicorn/<%= @options[:app][:id] %>.py <%= @options[:app][:module] %>

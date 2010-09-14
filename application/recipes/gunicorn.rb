@@ -41,6 +41,7 @@ end
 
 nginx_site "#{app[:id]}.conf" do
   notifies :restart, resources(:service => "nginx")
+  enable true
 end
 
 node.default[:gunicorn][:worker_processes] = [node[:cpu][:total].to_i * 4, 8].min

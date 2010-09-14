@@ -27,7 +27,7 @@ server {
     ssl_certificate /etc/ssl/certs/<%= @ssl[:certificate][:file] %>;
     ssl_certificate_key /etc/ssl/private/<%= @ssl[:key][:file] %>;
     <% else %>
-    listen <%= @port %> default;
+    listen <%= @port %>;
     <% end %>
 
     client_max_body_size 4G;

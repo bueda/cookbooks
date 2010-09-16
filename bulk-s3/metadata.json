@@ -1,29 +1,29 @@
 {
-    "suggestions": {
+    "replacing": {
     },
     "license": "Apache v2.0",
     "maintainer_email": "ops@bueda.com",
-    "conflicting": {
+    "groupings": {
+    },
+    "recommendations": {
     },
     "platforms": {
     },
-    "providing": {
-    },
+    "long_description": "",
     "description": "Download bulk data from S3",
-    "recipes": {
+    "suggestions": {
     },
     "attributes": {
     },
-    "replacing": {
-    },
     "version": "0.1.0",
+    "conflicting": {
+    },
     "dependencies": {
     },
-    "groupings": {
+    "recipes": {
     },
-    "long_description": "",
     "name": "bulk-s3",
-    "recommendations": {
+    "providing": {
     },
     "maintainer": "Bueda"
   }

@@ -38,15 +38,6 @@ execute "easy_install virtualenv" do
   not_if do File.exists?("/usr/local/bin/virtualenv") end
 end
 
-s3_file "/root/git-archive-all.sh" do
-  source "s3://bueda.deploy/git-archive-all.sh"
-  access_key_id data_bag_item(:aws, :primary)['access_key_id']
-  secret_access_key data_bag_item(:aws, :primary)['secret_access_key']
-  owner "root"
-  group "root"
-  mode 0755
-end
-
 node[:fab_deploy].each do |name, config|
   if not config[:tag]
     config[:tag] = 'latest_tag'

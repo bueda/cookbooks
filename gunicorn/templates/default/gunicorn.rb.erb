@@ -16,7 +16,7 @@ worker_class = "<%= @worker_class %>"
 worker_connections = <%= @max_worker_connections %>
 
 # What the timeout for killing busy workers is, in seconds
-timeout = <%= @timeout %>
+timeout = <%= @worker_timeout %>
 
 keepalive = <%= @keepalive %>
 

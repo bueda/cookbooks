@@ -45,10 +45,12 @@ nginx_site "#{app[:id]}.conf" do
 end
 
 node.default[:gunicorn][:worker_processes] = [node[:cpu][:total].to_i * 4, 8].min
-node.default[:unicorn][:preload_app] = true
+node.default[:gunicorn][:preload_app] = true
+node.default[:gunicorn][:worker_timeout] = 60
 
 gunicorn_config "/etc/gunicorn/#{app[:id]}.py" do
   bind "unix:/var/run/gunicorn/#{app[:id]}.sock"
   worker_processes node[:gunicorn][:worker_processes]
+  worker_timeout node[:gunicorn][:worker_timeout]
   preload_app node[:gunicorn][:preload_app] 
 end

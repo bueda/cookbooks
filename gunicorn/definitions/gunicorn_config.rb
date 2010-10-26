@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-define :gunicorn_config, :bind => nil, :timeout => 30, :keepalive => 2,
+define :gunicorn_config, :bind => nil, :worker_timeout => 30, :keepalive => 2,
         :connection_backlog => 2048, :preload_app => false,
         :worker_processes => 4, :pre_fork => nil, :post_fork => nil,
         :when_ready => nil, :pre_exec => nil, :pidfile => nil, :logfile => nil,

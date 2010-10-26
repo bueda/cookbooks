@@ -19,10 +19,6 @@
 
 app = node.run_state[:current_app] 
 
-# Hack to get around CHEF-1406 
-node.run_state[:seen_recipes].delete("application::gunicorn")
-include_recipe "application::gunicorn"
-
 template "#{node[:nginx][:dir]}/sites-available/#{app[:id]}.conf" do
   source "wsgi_nginx_gunicorn.conf.erb"
   owner "root"
@@ -45,3 +41,7 @@ runit_service app[:id] do
   options(:app => app, :gunicorn_binary => "gunicorn")
   run_restart false
 end
+
+# Hack to get around CHEF-1406 
+node.run_state[:seen_recipes].delete("application::gunicorn")
+include_recipe "application::gunicorn"

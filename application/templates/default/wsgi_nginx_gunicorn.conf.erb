@@ -75,6 +75,8 @@ server {
         # redirects, we set the Host: header above already.
         proxy_redirect off;
 
+        proxy_read_timeout 120;
+
         # Try to serve static files from nginx, no point in making an
         # *application* server like Unicorn/Rainbows! serve static files.
         if (!-f $request_filename) {

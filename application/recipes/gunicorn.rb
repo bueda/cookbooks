@@ -53,5 +53,5 @@ gunicorn_config "/etc/gunicorn/#{app[:id]}.py" do
   worker_processes node[:gunicorn][:worker_processes]
   worker_timeout node[:gunicorn][:worker_timeout]
   preload_app node[:gunicorn][:preload_app] 
-  notifies :restart, resources(:service => app[:id])
+  notifies :restart, resources(:runit_service => app[:id])
 end

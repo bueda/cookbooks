@@ -1,0 +1,13 @@
+#!/bin/bash
+
+<%- if @options[:app][:virtualenv] %>
+PYTHON_BINARY="<%= @options[:app][:virtualenv] %>/bin/python"
+<% else %>
+PYTHON_BINARY="python"
+<% end %>
+
+export DEPLOYMENT_TYPE="<%= node[:app_environment] %>"
+
+cd <%= @options[:app][:deploy_to] %>/current
+exec 2>&1
+exec chpst -u <%= @options[:app][:owner] %>:<%= @options[:app][:group] %> $PYTHON_BINARY <%= @options[:runner] %> --config=/etc/tornado/<%= @options[:app][:id] %>.py

@@ -1,0 +1,18 @@
+##
+# Tornado config at <%= @name %>
+# Managed by Chef - Local Changes will be Nuked from Orbit (just to be sure)
+##
+
+# What address:port to bind
+port = <%= @port %>
+
+<%- if @log_file_prefix %>
+log_file_prefix = "<%= @log_file_prefix %>"
+
+<%- end %>
+<%- if @logging %>
+logging = "<%= @logging %>"
+
+<%- end %>
+import os
+os.environ['DEPLOYMENT_TYPE'] = "<%= node[:app_environment] %>"

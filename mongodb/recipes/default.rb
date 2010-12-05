@@ -7,6 +7,19 @@
 # All rights reserved - Do Not Redistribute
 #
 
-bash "add apt repository for mongodb" do
-  code "apt-add-repository 'deb http://downloads.mongodb.org/distros/ubuntu #{node[:platform_version]} 10gen' && apt-get update"
+
+bash "apt-get update" do
+  code "apt-get update"
+  action :nothing
+end
+
+bash "add 10gen key" do
+  code "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10"
+  action :nothing
+  notifies :run, resources(:bash => "apt-get update"), :immediately
+end
+
+template "/etc/apt/sources.list.d/10gen.list" do
+  source "10gen.list.erb"
+  notifies :run, resources(:bash => "add 10gen key"), :immediately
 end

@@ -1,6 +1,5 @@
 ### GENERAL
-default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}"
-default[:mongodb][:datadir]     = "/var/db/mongodb"
+default[:mongodb][:datadir]     = "/mnt/mongodb"
 default[:mongodb][:config]      = "/etc/mongodb.conf"
 default[:mongodb][:logfile]     = "/var/log/mongodb.log"
 default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"

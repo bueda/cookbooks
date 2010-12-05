@@ -23,3 +23,17 @@ template "/etc/apt/sources.list.d/10gen.list" do
   source "10gen.list.erb"
   notifies :run, resources(:bash => "add 10gen key"), :immediately
 end
+
+template node[:mongodb][:config] do
+  source "mongodb.conf.erb"
+  owner "mongodb"
+  group "mongodb"
+  mode 0644
+  backup false
+end
+
+service "mongodb" do
+  supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
+  action [:enable, :start]
+  subscribes :restart, resources(:template => node[:mongodb][:config])
+end

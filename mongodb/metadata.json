@@ -1,0 +1,29 @@
+{
+  "name": "mongodb",
+  "description": "Installs/Configures mongodb",
+  "long_description": "",
+  "maintainer": "Bueda Inc.",
+  "maintainer_email": "ops@bueda.com",
+  "license": "All rights reserved",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0"
+}

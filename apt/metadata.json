@@ -1,30 +1,30 @@
 {
-    "suggestions": {
-    },
-    "license": "Apache v2.0",
-    "maintainer_email": "ops@bueda.com",
-    "conflicting": {
-    },
-    "platforms": {
-    },
-    "providing": {
-    },
-    "description": "Update apt and upgrade all packages",
-    "recipes": {
-      "apt": "Update apt only"
-    },
-    "attributes": {
-    },
-    "replacing": {
-    },
-    "version": "0.1.0",
-    "dependencies": {
-    },
-    "groupings": {
-    },
-    "long_description": "",
-    "name": "apt",
-    "recommendations": {
-    },
-    "maintainer": "Bueda"
-  }
+  "name": "apt",
+  "description": "Update apt and upgrade all packages",
+  "long_description": "",
+  "maintainer": "Bueda",
+  "maintainer_email": "ops@bueda.com",
+  "license": "Apache v2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "apt": "Update apt only"
+  },
+  "version": "0.1.0"
+}

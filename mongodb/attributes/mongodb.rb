@@ -1,7 +1,7 @@
 ### GENERAL
 default[:mongodb][:datadir]     = "/mnt/mongodb"
 default[:mongodb][:config]      = "/etc/mongodb.conf"
-default[:mongodb][:logfile]     = "/var/log/mongodb.log"
+default[:mongodb][:logfile]     = "/var/log/mongodb/mongodb.log"
 default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"
 default[:mongodb][:host]        = "localhost"
 default[:mongodb][:port]        = 27017

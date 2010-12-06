@@ -21,6 +21,7 @@ end
 
 template "/etc/apt/sources.list.d/10gen.list" do
   source "10gen.list.erb"
+  mode 0644
   notifies :run, resources(:bash => "add 10gen key"), :immediately
 end
 

@@ -4,8 +4,9 @@ search(:apps) do |app|
   Chef::Log.debug("Running bulk-s3 for the #{app} app with " +
       "server roles #{app[:server_roles]} and this server has " +
       "#{node.run_list.roles}")
-  next unless app[:server_roles] & node.run_list.roles
+  next unless (app[:server_roles] & node.run_list.roles).length != 0
   next unless app[:s3] and app[:s3][:files]
+  Chef::Log.debug("Decided to download the S3 files")
   app[:s3][:files].each do |name, config|
     directory File.dirname(name) do
       owner config[:owner]

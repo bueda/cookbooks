@@ -1,29 +1,29 @@
 {
-    "replacing": {
-    },
-    "license": "Apache v2.0",
-    "maintainer_email": "ops@bueda.com",
-    "groupings": {
-    },
-    "recommendations": {
-    },
-    "platforms": {
-    },
-    "long_description": "",
-    "description": "Download bulk data from S3",
-    "suggestions": {
-    },
-    "attributes": {
-    },
-    "version": "0.1.0",
-    "conflicting": {
-    },
-    "dependencies": {
-    },
-    "recipes": {
-    },
-    "name": "bulk-s3",
-    "providing": {
-    },
-    "maintainer": "Bueda"
-  }
+  "name": "bulk-s3",
+  "description": "Download bulk data from S3",
+  "long_description": "",
+  "maintainer": "Bueda",
+  "maintainer_email": "ops@bueda.com",
+  "license": "Apache v2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0"
+}

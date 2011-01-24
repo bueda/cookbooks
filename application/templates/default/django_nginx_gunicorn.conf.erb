@@ -44,15 +44,6 @@ server {
     # path for static files
     root <%= @docroot %>;
 
-    location /media/admin {
-      <%- if @virtualenv %>
-      alias <%= @virtualenv %>/lib/python2.6/site-packages/django/contrib/admin/media/;
-      <% else %>
-      alias /usr/lib/python2.6/site-packages/django/contrib/admin/media/;
-      <% end %>
-      break;
-    }
-
     location /media/ {
         alias <%= @docroot %>;
         break;

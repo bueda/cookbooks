@@ -78,6 +78,3 @@ def def_pre_exec(server):
     <%= @pre_exec %>
 
 <%- end %>
-
-import os
-os.environ['DEPLOYMENT_TYPE'] = "<%= node[:app_environment] %>"

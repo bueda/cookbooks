@@ -7,6 +7,7 @@ PYTHON_BINARY="python"
 <% end %>
 
 export DEPLOYMENT_TYPE="<%= node[:app_environment] %>"
+export DJANGO_SETTINGS_MODULE="settings"
 
 cd <%= @options[:app][:deploy_to] %>/current
 exec 2>&1

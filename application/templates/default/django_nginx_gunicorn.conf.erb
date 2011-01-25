@@ -22,7 +22,7 @@ upstream <%= @app %> {
 
 server {
     <%- if @ssl %>
-    listen <%= @ssl[:port] %> default ssl;
+    listen <%= @ssl[:port] %>;
     listen <%= @port %>;
     ssl_certificate /etc/ssl/certs/<%= @ssl[:certificate][:file] %>;
     ssl_certificate_key /etc/ssl/private/<%= @ssl[:key][:file] %>;

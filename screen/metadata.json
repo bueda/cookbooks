@@ -1,29 +1,29 @@
 {
-    "suggestions": {
-    },
-    "license": "Apache v2.0",
-    "maintainer_email": "ops@bueda.com",
-    "conflicting": {
-    },
-    "platforms": {
-    },
-    "providing": {
-    },
-    "description": "Installs GNU screen",
-    "recipes": {
-    },
-    "attributes": {
-    },
-    "replacing": {
-    },
-    "version": "0.1.0",
-    "dependencies": {
-    },
-    "groupings": {
-    },
-    "long_description": "",
-    "name": "screen",
-    "recommendations": {
-    },
-    "maintainer": "Bueda"
-  }
+  "name": "screen",
+  "description": "Installs GNU screen",
+  "long_description": "",
+  "maintainer": "Bueda",
+  "maintainer_email": "ops@bueda.com",
+  "license": "Apache v2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0"
+}

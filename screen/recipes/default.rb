@@ -21,6 +21,6 @@ package "screen" do
   action :install
 end
 
-package "screen-profiles" do
+package "byobu" do
   action :install
 end

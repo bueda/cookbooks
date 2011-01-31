@@ -33,6 +33,7 @@ template "#{node[:nginx][:dir]}/sites-available/#{app[:id]}.conf" do
     :server_name => "#{app[:id]}.#{node[:domain]}",
     :server_aliases => [ app[:id] ] + (app[:aliases] || [])
   )
+  notifies :restart, resources(:service => "nginx")
 end
 
 runit_service app[:id] do

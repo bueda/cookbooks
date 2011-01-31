@@ -20,15 +20,63 @@ upstream <%= @app %> {
     # server 192.168.0.9:8080 fail_timeout=0;
 }
 
+<%- if @ssl %>
 server {
-    <%- if @ssl %>
     listen <%= @ssl[:port] %>;
-    listen <%= @port %>;
+    ssl on;
     ssl_certificate /etc/ssl/certs/<%= @ssl[:certificate][:file] %>;
     ssl_certificate_key /etc/ssl/private/<%= @ssl[:key][:file] %>;
-    <% else %>
+
+    client_max_body_size 4G;
+    server_name <% @server_aliases.each do |a| %><%= " #{a}" %> <% end %>;
+
+    error_log <%= node[:nginx][:log_dir] %>/<%= @app %>-error.log;
+    access_log <%= node[:nginx][:log_dir] %>/<%= @app %>-access.log combined;
+
+    # ~2 seconds is often enough for most folks to parse HTML/CSS and
+    # retrieve needed images/icons/frames, connections are cheap in
+    # nginx so increasing this is generally safe...
+    keepalive_timeout 5;
+
+    # path for static files
+    root <%= @docroot %>;
+
+    location /media/ {
+        alias <%= @docroot %>;
+        break;
+    }
+
+    location / {
+        # an HTTP header important enough to have its own Wikipedia entry:
+        #   http://en.wikipedia.org/wiki/X-Forwarded-For
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # enable this if and only if you use HTTPS, this helps Rack
+        # set the proper protocol for doing redirects:
+        # proxy_set_header X-Forwarded-Proto https;
+
+        # pass the Host: header from the client right along so redirects
+        # can be set properly within the Rack application
+        proxy_set_header Host $http_host;
+
+        # we don't want nginx trying to do something clever with
+        # redirects, we set the Host: header above already.
+        proxy_redirect off;
+
+        proxy_read_timeout 120;
+
+        # Try to serve static files from nginx, no point in making an
+        # *application* server like Unicorn/Rainbows! serve static files.
+        if (!-f $request_filename) {
+            proxy_pass http://<%= @app %>;
+            break;
+        }
+    }
+}
+<%- end %>
+
+server {
     listen <%= @port %>;
-    <% end %>
 
     client_max_body_size 4G;
     server_name <% @server_aliases.each do |a| %><%= " #{a}" %> <% end %>;

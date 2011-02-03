@@ -27,9 +27,6 @@ server {
     ssl_certificate /etc/ssl/certs/<%= @ssl[:certificate][:file] %>;
     ssl_certificate_key /etc/ssl/private/<%= @ssl[:key][:file] %>;
 
-    proxy_set_header X-Forwarded-Protocol https;
-    proxy_set_header X-Forwarded_SSL on;
-
     client_max_body_size 4G;
     server_name <% @server_aliases.each do |a| %><%= " #{a}" %> <% end %>;
 
@@ -56,7 +53,7 @@ server {
 
         # enable this if and only if you use HTTPS, this helps Rack
         # set the proper protocol for doing redirects:
-        # proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Proto https;
 
         # pass the Host: header from the client right along so redirects
         # can be set properly within the Rack application

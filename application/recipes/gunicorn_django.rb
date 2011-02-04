@@ -27,6 +27,7 @@ template "#{node[:nginx][:dir]}/sites-available/#{app[:id]}.conf" do
   variables(
     :app => app[:id],
     :ssl => app[:ssl],
+    :hummingbird => app[:hummingbird],
     :port => app[:port] || 80,
     :docroot => File.join(app[:deploy_to], "current", "media/"),
     :virtualenv => app[:virtualenv],

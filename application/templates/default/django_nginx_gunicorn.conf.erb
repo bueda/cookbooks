@@ -46,6 +46,13 @@ server {
         break;
     }
 
+    <%- if @hummingbird %>
+    location /hb/ {
+        proxy_pass <%= @hummingbird[:proxy_target] %>;
+        break;
+    }
+    <% end %>
+
     location / {
         # an HTTP header important enough to have its own Wikipedia entry:
         #   http://en.wikipedia.org/wiki/X-Forwarded-For
@@ -96,6 +103,13 @@ server {
         alias <%= @docroot %>;
         break;
     }
+
+    <%- if @hummingbird %>
+    location /hb/ {
+        proxy_pass <%= @hummingbird[:proxy_target] %>;
+        break;
+    }
+    <% end %>
 
     location / {
         # an HTTP header important enough to have its own Wikipedia entry:

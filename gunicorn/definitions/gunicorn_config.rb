@@ -20,10 +20,10 @@
 
 define :gunicorn_config, :bind => nil, :worker_timeout => 30, :keepalive => 2,
         :connection_backlog => 2048, :preload_app => false,
-        :worker_processes => 4, :pre_fork => nil, :post_fork => nil,
+        :worker_processes => 1, :pre_fork => nil, :post_fork => nil,
         :when_ready => nil, :pre_exec => nil, :pidfile => nil, :logfile => nil,
         :loglevel => nil, :debug => false,
-        :worker_class => "egg:gunicorn#gevent", :max_worker_connections => 30,
+        :worker_class => "egg:gunicorn#gevent", :max_worker_connections => 1000,
         :run_user => nil, :run_group => nil, :umask => 0, :notifies => nil,
         :owner => nil, :group => nil, :mode => nil do
 

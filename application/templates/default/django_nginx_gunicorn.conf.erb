@@ -27,6 +27,10 @@ server {
     ssl_certificate /etc/ssl/certs/<%= @ssl[:certificate][:file] %>;
     ssl_certificate_key /etc/ssl/private/<%= @ssl[:key][:file] %>;
 
+    # Use HTTP Strict Transport Security to force client to use secure
+    # connections only
+    add_header Strict-Transport-Security max-age=500;
+
     client_max_body_size 4G;
     server_name <% @server_aliases.each do |a| %><%= " #{a}" %> <% end %>;
 
@@ -72,12 +76,7 @@ server {
 
         proxy_read_timeout 120;
 
-        # Try to serve static files from nginx, no point in making an
-        # *application* server like Unicorn/Rainbows! serve static files.
-        if (!-f $request_filename) {
-            proxy_pass http://<%= @app %>;
-            break;
-        }
+        proxy_pass http://<%= @app %>;
     }
 }
 <%- end %>

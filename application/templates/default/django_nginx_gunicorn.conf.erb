@@ -42,11 +42,12 @@ server {
     # nginx so increasing this is generally safe...
     keepalive_timeout 5;
 
-    # path for static files
+    # root directory of project
     root <%= @docroot %>;
 
-    location /media/ {
-        alias <%= @docroot %>;
+    <%- ["static", "media"].each do |folder| %>
+    location /<%= folder %>/ {
+        alias <%= @docroot %>/<%= folder %>/;
 
         gzip  on;
         gzip_http_version 1.0;
@@ -64,6 +65,7 @@ server {
         expires 48h;
         break;
     }
+    <% end %>
 
     <%- if @hummingbird %>
     location /hb/ {
@@ -110,11 +112,12 @@ server {
     # nginx so increasing this is generally safe...
     keepalive_timeout 5;
 
-    # path for static files
+    # root directory of project
     root <%= @docroot %>;
 
-    location /media/ {
-        alias <%= @docroot %>;
+    <%- ["static", "media"].each do |folder| %>
+    location /<%= folder %>/ {
+        alias <%= @docroot %>/<%= folder %>/;
 
         gzip  on;
         gzip_http_version 1.0;
@@ -130,9 +133,9 @@ server {
         gzip_vary           on;
 
         expires 48h;
-
         break;
     }
+    <% end %>
 
     <%- if @hummingbird %>
     location /hb/ {

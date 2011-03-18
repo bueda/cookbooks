@@ -29,7 +29,7 @@ template "#{node[:nginx][:dir]}/sites-available/#{app[:id]}.conf" do
     :ssl => app[:ssl],
     :hummingbird => app[:hummingbird],
     :port => app[:port] || 80,
-    :docroot => File.join(app[:deploy_to], "current", "media/"),
+    :docroot => File.join(app[:deploy_to], "current"),
     :virtualenv => app[:virtualenv],
     :server_name => "#{app[:id]}.#{node[:domain]}",
     :server_aliases => [ app[:id] ] + (app[:aliases] || [])

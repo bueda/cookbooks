@@ -1,6 +1,7 @@
 include_recipe "apt"
 
 package "vim-gnome"
+package "ncurses-term"
 package "ack-grep"
 package "htop"
 package "rake"

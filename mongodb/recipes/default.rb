@@ -25,6 +25,8 @@ template "/etc/apt/sources.list.d/10gen.list" do
   notifies :run, resources(:bash => "add 10gen key"), :immediately
 end
 
+package "mongodb-unstable"
+
 template node[:mongodb][:config] do
   source "mongodb.conf.erb"
   owner "mongodb"

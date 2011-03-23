@@ -6,7 +6,9 @@ groups.each do |group|
     gid group[:gid]
     action [ :create, :modify, :manage ]
   end
+end
 
+groups.each do |group|
   if node[:active_groups].include?(group[:id])
     search(:users, "groups:#{group[:id]}").each do |user|
       home_dir = user[:home_dir] || "/home/#{user[:id]}"

@@ -18,6 +18,8 @@
 #
 package "python"
 package "python-dev"
+package "libxml2-dev"
+package "libxslt1-dev"
 
 node[:python][:distpackages].each do |pkg|
   package "python-#{pkg}" do
